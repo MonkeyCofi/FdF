@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/28 20:03:33 by pipolint         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:49:23 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,4 @@ void	init_map(t_mlx **mlx)
 	(*mlx)->map->height = 0;
 	(*mlx)->map->width = 0;
 	(*mlx)->map->array = NULL;
-	(*mlx)->map->color = NULL;
 }

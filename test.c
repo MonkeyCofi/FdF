@@ -26,12 +26,16 @@ int main(void)
 	//char *str = NULL;
 	char *str;
 
-	int fd = open("fdf.c", O_RDONLY);
+	int fd = open("test_maps/42.fdf", O_RDONLY);
 	if (fd < 0)
 		return -1;
-	while ((str = get_next_line(fd)))
-	{
-		ft_printf("%s", str);
-		free(str);
-	}
+	char **test = ft_split(get_next_line(fd), ' ');
+	int i = 0;
+	while (test[i])
+		ft_printf("%s, ", test[i++]);
+	//while ((str = get_next_line(fd)))
+	//{
+	//	ft_printf("%s", str);
+	//	free(str);
+	//}
 }
