@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/28 20:59:21 by pipolint         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:01:03 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	validate_map(t_map *map, char *file)
 	if (f == -1)
 		return ;
 	i = 0;
+	map->array = malloc(sizeof(int **) * map->height);
 	while ((str = get_next_line(f)) && *str)
 	{
 		map->array[i] = malloc(sizeof(int *) * map->width);
