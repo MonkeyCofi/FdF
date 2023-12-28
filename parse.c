@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/28 19:16:43 by pipolint         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:23:40 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,72 +60,50 @@ int	get_height(char *filename)
 	return (rows);
 }
 
-//void	populate_table(int **nums, t_mlx *mlx, char *line)
-//{
-//	char	**coords;
-//	int		i;
-//	int		j;
-
-//	coords = ft_split(line, ' ');
-//	i = 0;
-//	while (coords[i] && i < mlx->map->width)
-//	{
-//		nums[i] = malloc(sizeof(int) * 2);
-//		if (!nums[i])
-//			return ;
-//		nums[i][0] = ft_atoi(coords[i]);
-//		j = 0;
-//		while (coords[i][j] != ',' && coords[i][j])
-//			j++;
-//		if (coords[i][j] == ',')
-//			nums[i][1] = ft_atoi_base(&coords[i][j], "0123456789ABCDEF");
-//		else
-//			nums[i][1] = -1;
-//		free(coords[i]);
-//		i++;
-//	}
-//	if (i != mlx->map->width || coords[i])
-//		return ;
-//	free(coords);
-//}
-
-//void	parse_map(t_map *map, t_mlx *mlx, char *file)
-//{
-//	char	*str;
-//	int		o_file;
-//	int		i;
-
-//	map->height = get_height(file);
-//	map->width = get_width(file);
-//	o_file = open(file, O_RDONLY);
-//	if (o_file < 0)
-//		return ;
-//	map->array = malloc(sizeof(int **) * map->height);
-//	if (!map->array)
-//		return ;
-//	i = 0;
-//	while ((str = get_next_line(o_file)) && *str != '\0')
-//	{
-//		map->array[i++] = malloc(sizeof(int *) * map->width);
-//		if (!map->array[i])
-//			return ;
-//		populate_table(map->array[i], mlx, str);
-//		free(str);
-//	}
-//}
-
-/*
-
-*/
-void	populate_table(t_map *map, char *line)
+void	populate_table(int **nums, char *line, t_mlx *mlx)
 {
-	char	**coords;
+	char	**cords;
 	int		i;
-
-	coords = ft_split(line, ' ');
+	int		j;
+	
+	cords = ft_split(line, ' ');
 	i = 0;
-	while (coords[i] && i < map->width)
+	while (cords[i] && i < mlx->map->width)
 	{
-		
+		nums[i] = malloc(sizeof(int) * 2);
+		if (!nums[i])
+			return ;
+		nums[i][0] = ft_atoi(cords[i]);
+		j = 0;
+		while (cords[i][j] != ',' && cords[i][j])
+			j++;
+		if (cords[i][j] == ',')
+			nums[i][1] = ft_atoi_base(&cords[i][j + 1], "0123456789ABCDEF");
+		else
+			nums[i][1] = -1;
+		free(line);
+		i++;
+	}
+}
+
+void	validate_map(t_mlx *mlx, char *file)
+{
+	int		i;
+	int		f;
+	char	*str;
+
+	mlx->map->height = get_height(file);
+	mlx->map->width = get_width(file);
+	f = open(file, O_RDONLY);
+	if (f == -1)
+		return ;
+	i = 0;
+	while ((str = get_next_line(f)) && *str)
+	{
+		mlx->map->array[i] = malloc(sizeof(int *) * mlx->map->width);
+		if (!mlx->map->array[i])
+			return ;
+		populate_table(mlx->map->array[i], str, mlx);
+		i++;
 	}
 }

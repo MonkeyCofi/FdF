@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/28 19:13:24 by pipolint         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:22:30 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct	s_map
 	int	height;
 	int	width;
 	int	***array;
-	int	z;
+	int	**color;
 }	t_map;
 
 typedef struct	s_mlx
@@ -45,11 +45,11 @@ typedef struct	s_mlx
 	t_map	*map;
 }	t_mlx;
 
-void	parse_map(t_map *map, t_mlx *mlx, char *file);
+void	validate_map(t_mlx *mlx, char *file);
 
 // init
 t_mlx	*init_mlx();
-void	init_map(t_mlx **mlx, int o_height, int o_width);
+void	init_map(t_mlx **mlx);
 int		ft_atoi_base(char *str, char *base);
 
 #endif
