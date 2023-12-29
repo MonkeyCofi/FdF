@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/28 21:05:06 by pipolint         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:12:45 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,11 @@ int main(int ac, char **av)
 {
 	t_mlx	*mlx;
 
-	(void)av;
 	if (ac != 2)
 		return (-1);
 	mlx = init_mlx();
 	init_map(&mlx);
-	validate_map(mlx->map, av[1]);
-	int i;
-	int j;
-	int k;
-	i = j = k = 0;
-
+	parse_map(mlx->map, av[1]);
 	mlx_key_hook(mlx->mlx_window, keypress, &mlx->mlx);
 	mlx_loop(mlx->mlx);
 	free(mlx->mlx);
