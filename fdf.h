@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/29 15:23:08 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:06:34 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ void	parse_map(t_map *map, char *file);
 t_mlx	*init_mlx();
 void	init_map(t_mlx **mlx);
 int		ft_atoi_base(char *str, char *base);
+
+// temp
+void	pixel_put(t_data *data, int x, int y, int color);
 
 #endif
