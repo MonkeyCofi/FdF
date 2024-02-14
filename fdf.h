@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/14 19:06:34 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:31:41 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int		ft_atoi_base(char *str, char *base);
 
 // temp
 void	pixel_put(t_data *data, int x, int y, int color);
+void	draw(int x1, int x2, int y1, int y2, t_data *data);
 
 #endif

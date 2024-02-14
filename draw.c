@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/14 20:21:07 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:33:11 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 //	ft_bzero(mlx->img->addr, WIDTH * HEIGHT * (mlx->img->bpp / 8));
 //}
 
-int	abs(int value)
+int	absolute(int value)
 {
 	if (value < 0)
 		return (value * -1);
 	return (value);
 }
 
-void	draw(int x1, int x2, int y1, int y2)
+void	draw(int x1, int x2, int y1, int y2, t_data *data)
 {
 	float	dx;
 	float	dy;
@@ -42,7 +42,15 @@ void	draw(int x1, int x2, int y1, int y2)
 		length = absolute(dx);
 	else
 		length = absolute(dy);
-	
+	while (y1 < y2)
+	{
+		while (x1 < x2)
+		{
+			pixel_put(data, y1, y2, 0xFF0000);
+			x1++;
+		}
+		y1++;
+	}
 }
 
-void	draw_line()
+//void	draw_line()

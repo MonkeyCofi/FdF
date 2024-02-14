@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/14 16:29:00 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:36:46 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,18 @@ int main(int ac, char **av)
 	parse_map(mlx->map, av[1]);
 	mlx_key_hook(mlx->mlx_window, keypress, &mlx->mlx);
 	mlx_loop(mlx->mlx);
+	int i = 0;
+	int j = 0;
+	while (i < 1000)
+	{
+		while (j < 1000)
+		{
+			//pixel_put(mlx->img, i, j, 0xFF0000);
+			mlx_pixel_put(mlx->mlx, mlx->mlx_window, j, i, 0xFF0000);
+			j++;
+		}
+		i++;
+	}
+	//draw(0, mlx->map->width, 0, mlx->map->width, mlx->img);
 	free(mlx->mlx);
 }
