@@ -24,18 +24,14 @@ int main(void)
 	//	printf("\n");
 	//}
 	//char *str = NULL;
-	char *str;
-
-	int fd = open("test_maps/42.fdf", O_RDONLY);
-	if (fd < 0)
-		return -1;
-	char **test = ft_split(get_next_line(fd), ' ');
-	int i = 0;
-	while (test[i])
-		ft_printf("%s, ", test[i++]);
 	//while ((str = get_next_line(fd)))
 	//{
 	//	ft_printf("%s", str);
 	//	free(str);
 	//}
+	int x = 1;
+	if (*(char *)&x == 1)
+		printf("Little endian\n");
+	else
+		printf("Big endian\n");
 }

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2023/12/29 15:28:51 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:27:34 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,106 +60,87 @@ int	get_height(char *filename)
 	return (rows);
 }
 
-void	populate_table(int **z, char *line, int width)
-{
-	char	**cords;
-	int		i;
-	int		index;
-
-	cords = ft_split(line, ' ');
-	i = 0;
-	while (cords[i] && i < width)
-	{
-		z[i] = malloc(sizeof(int) * 2);
-		if (!z[i])
-			return ;
-		z[i][0] = ft_atoi(cords[i]);
-		index = 0;
-		while (cords[i][index] != ',' && cords[i][index])
-			index++;
-		if (cords[i][index] == ',')
-			z[i][1] = ft_atoi_base(&cords[i][index + 1], "0123456789ABCDEF");
-		else
-			z[i][1] = -1;
-		free(cords[i]);
-		i++;
-	}
-	free(cords);
-}
-
-void	parse_map(t_map *map, char *file)
-{
-	int		f;
-	char	*line;
-	int		i;
-
-	f = open(file, O_RDONLY);
-	if (f == -1)
-		return ;
-	map->height = get_height(file);
-	map->width = get_width(file);
-	map->z_coord = malloc(sizeof(int **) * map->height);
-	i = 0;
-	while (1)
-	{
-		map->z_coord[i] = malloc(sizeof(int *) * map->width);
-		line = get_next_line(f);
-		if (!line || !*line)
-			return ;
-		 populate_table(map->z_coord[i++], line, map->width);
-		 free(line);
-	}
-	close(f);
-}
-
-//void	populate_table(int **nums, char *line, int width)
+//void	populate_table(int **z, char *line, int width)
 //{
 //	char	**cords;
-//	//int		i;
-//	//int		j;
-//	(void)width;
-//	(void)nums;
-	
+//	int		i;
+//	int		index;
+
 //	cords = ft_split(line, ' ');
-//	//i = 0;
-//	//while (cords[i] && i < width)
-//	//{
-//	//	nums[i] = malloc(sizeof(int) * 2);
-//	//	if (!nums[i])
-//	//		return ;
-//	//	nums[i][0] = ft_atoi(cords[i]);
-//	//	j = 0;
-//	//	while (cords[i][j] != ',' && cords[i][j])
-//	//		j++;
-//	//	if (cords[i][j] == ',')
-//	//		nums[i][1] = ft_atoi_base(&cords[i][j + 1], "0123456789ABCDEF");
-//	//	else
-//	//		nums[i][1] = -1;
-//	//	free(cords[i]);
-//	//	i++;
-//	//}
+//	i = 0;
+//	while (cords[i] && i < width)
+//	{
+//		z[i] = malloc(sizeof(int) * 2);
+//		if (!z[i])
+//			return ;
+//		z[i][0] = ft_atoi(cords[i]);
+//		index = 0;
+//		while (cords[i][index] != ',' && cords[i][index])
+//			index++;
+//		if (cords[i][index] == ',')
+//			z[i][1] = ft_atoi_base(&cords[i][index + 1], "0123456789ABCDEF");
+//		else
+//			z[i][1] = -1;
+//		free(cords[i]);
+//		i++;
+//	}
+//	free(cords);
 //}
 
-//void	validate_map(t_map *map, char *file)
+//void	parse_map(t_map *map, char *file)
 //{
-//	int		i;
 //	int		f;
-//	char	*str;
+//	char	*line;
+//	int		i;
 
-//	map->height = get_height(file);
-//	map->width = get_width(file);
 //	f = open(file, O_RDONLY);
 //	if (f == -1)
 //		return ;
+//	map->height = get_height(file);
+//	map->width = get_width(file);
+//	map->z_coord = malloc(sizeof(int **) * map->height);
 //	i = 0;
-//	map->array = malloc(sizeof(int **) * map->height);
-//	while ((str = get_next_line(f)) && *str)
+//	while (1)
 //	{
-//		map->array[i] = malloc(sizeof(int *) * map->width);
-//		if (!map->array[i])
+//		map->z_coord[i] = malloc(sizeof(int *) * map->width);
+//		line = get_next_line(f);
+//		if (!line || !*line)
 //			return ;
-//		//populate_table(mlx->map->array[i], str, mlx->map->width);
-//		i++;
-//		free(str);
+//		 populate_table(map->z_coord[i++], line, map->width);
+//		 free(line);
 //	}
+//	close(f);
 //}
+
+void	get_coords(char *line, int width, t_map *map, int **z)
+{
+	char	**coords;
+	int		i;
+
+	coords = ft_split(line, ' ');
+	i = -1;
+	while (coords[++i] && i < width)
+	{
+		z = malloc(sizeof(int) * 2);
+		if (!z)
+			exit(EXIT_FAILURE);
+		
+	}
+}
+
+void	parse_map(char *file, t_map *map)
+{
+	char	*line;
+	int		op_file;
+
+	op_file = open(file, O_RDONLY);
+	if (op_file < 0)
+		exit(EXIT_FAILURE);
+	line = get_next_line(op_file);
+	while (line)
+	{
+		
+		free(line);
+		line = get_next_line(fd);
+	}
+}

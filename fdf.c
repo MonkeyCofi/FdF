@@ -6,34 +6,20 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/14 20:36:46 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:59:38 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	pixel_put(t_data *data, int x, int y, int color)
+void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
-	char	*dst;
+	char	*p;
 
-	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
-}
-
-void draw_square(t_data *img, int x, int y, int height, int width, int color)
-{
-	int height_i;
-	int	width_j;
-
-	height_i = 0;
-	while (height_i < height + y)
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		width_j = x;
-		while (width_j < width + x)
-		{
-			pixel_put(img, width_j++, height_i, color);
-		}
-		height_i++;
+		p = mlx->img.addr + y * mlx->img.line_length + x * (mlx->img.bpp / 8);
+		*(int *)p = color;
 	}
 }
 
@@ -43,32 +29,37 @@ int	keypress(int keycode, t_mlx *mlx)
 		mlx_destroy_window(mlx->mlx, mlx->mlx_window);
 	(void)mlx;
 	ft_printf("%d\n", keycode);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
 int main(int ac, char **av)
 {
-	t_mlx	*mlx;
+	t_mlx	mlx;
 
 	if (ac != 2)
-		return (-1);
-	mlx = init_mlx();
-	init_map(&mlx);
-	parse_map(mlx->map, av[1]);
-	mlx_key_hook(mlx->mlx_window, keypress, &mlx->mlx);
-	mlx_loop(mlx->mlx);
-	int i = 0;
-	int j = 0;
-	while (i < 1000)
 	{
-		while (j < 1000)
-		{
-			//pixel_put(mlx->img, i, j, 0xFF0000);
-			mlx_pixel_put(mlx->mlx, mlx->mlx_window, j, i, 0xFF0000);
-			j++;
-		}
-		i++;
+		ft_printf("Usage: ./fdf [mapfile]\n");
+		exit(EXIT_FAILURE);
 	}
-	//draw(0, mlx->map->width, 0, mlx->map->width, mlx->img);
-	free(mlx->mlx);
+	init_mlx(&mlx);
+	init_map(&mlx);
+	parse_map(mlx.map, av[1]);
+	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
+	mlx_loop(mlx.mlx);
 }
+
+//int main(int ac, char **av)
+//{
+//	t_mlx	*mlx;
+
+//	if (ac != 2)
+//		return (-1);
+//	mlx = init_mlx();
+//	init_map(&mlx);
+//	parse_map(mlx->map, av[1]);
+//	mlx_key_hook(mlx->mlx_window, keypress, &mlx->mlx);
+//	pixel_put(&mlx->img, 0, 0, 0xFF0000);
+//	mlx_loop(mlx);
+//	free(mlx->mlx);
+//	(void)av;
+//}

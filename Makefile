@@ -18,7 +18,7 @@ LIBFT_DIR = ./libft/
 
 all: $(NAME)
 	make -C $(MLX)
-	make -C $(MLXOS)
+	#make -C $(MLXOS)
 	make -C $(LIBFT_DIR)
 	$(CC) -Lmlx -lmlx -framework OpenGL -framework Appkit $(LIBFT_DIR)$(LIBFT) $(OBJS) -o $(NAME)
 
