@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/16 15:27:34 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:06:07 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,35 +112,53 @@ int	get_height(char *filename)
 //	close(f);
 //}
 
-void	get_coords(char *line, int width, t_map *map, int **z)
+void	get_coords(char *line, int width, int **z)
 {
 	char	**coords;
 	int		i;
+	int		j;
 
 	coords = ft_split(line, ' ');
 	i = -1;
 	while (coords[++i] && i < width)
 	{
-		z = malloc(sizeof(int) * 2);
-		if (!z)
+		j = 0;
+		z[i] = malloc(sizeof(int) * 2);
+		if (!z[i])
 			exit(EXIT_FAILURE);
-		
+		ft_printf("%d\n", ft_atoi(coords[i]));
+		z[i][0] = ft_atoi(coords[i]);
+		ft_printf("test\n");
+		while (coords[i][j] != ',')
+			j++;
+		if (coords[i][j] == ',')
+			z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
+		else
+			z[i][1] = 0;
+		free(coords[i]);
 	}
+	free(coords);
 }
 
 void	parse_map(char *file, t_map *map)
 {
 	char	*line;
 	int		op_file;
+	int		i;
 
 	op_file = open(file, O_RDONLY);
 	if (op_file < 0)
 		exit(EXIT_FAILURE);
 	line = get_next_line(op_file);
+	map->height = get_height(file);
+	map->width = get_width(file);
+	map->z_coord = malloc(sizeof(int **) * map->height);
+	i = 0;
 	while (line)
 	{
-		
+		map->z_coord = malloc(sizeof(int *) * map->width);
+		get_coords(line, map->width, map->z_coord[i++]);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(op_file);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/16 14:54:02 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:34:45 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ typedef struct	s_mlx
 	t_map	*map;
 }	t_mlx;
 
-void	parse_map(t_map *map, char *file);
+//void	parse_map(t_map *map, char *file);
+void	parse_map(char *file, t_map *map);
 
 // init
 //t_mlx	*init_mlx();
