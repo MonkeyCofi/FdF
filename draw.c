@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/15 16:23:14 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:39:06 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,7 @@ int	absolute(int value)
 //	}
 //}
 
-//void	draw_line()
+void	draw_line(int x, int y)
+{
+	
+}

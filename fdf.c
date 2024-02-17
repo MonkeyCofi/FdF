@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/16 17:05:42 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:37:41 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,10 @@ int main(int ac, char **av)
 	}
 	init_mlx(&mlx);
 	init_map(&mlx);
-	//parse_map(mlx.map, av[1]);
 	parse_map(av[1], mlx.map);
 	ft_printf("Map height %d\n", mlx.map->height);
 	ft_printf("Map width %d\n", mlx.map->width);
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
-	//for (int i = 0; i < mlx.map->height; i++)
-	//{
-	//	for (int j = 0; j < mlx.map->width; j++)
-	//	{
-	//		ft_printf("");
-	//	}
-	//	ft_printf("\n");
-	//}
 	mlx_loop(mlx.mlx);
 }
 

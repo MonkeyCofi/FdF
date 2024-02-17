@@ -16,6 +16,8 @@ LIBFT = libft.a
 
 LIBFT_DIR = ./libft/
 
+OS = $(uname)
+
 all: $(NAME)
 	make -C $(MLX)
 	#make -C $(MLXOS)

@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include "libft/libft.h"
 #include <fcntl.h>
+#include "fdf.h"
 
-int main(void)
+int main(int ac, char **av)
 {
 	// print a right angled triangle of height 5
 	//for (int i = 0; i < 5; i++)
@@ -29,9 +30,11 @@ int main(void)
 	//	ft_printf("%s", str);
 	//	free(str);
 	//}
-	int x = 1;
-	if (*(char *)&x == 1)
-		printf("Little endian\n");
-	else
-		printf("Big endian\n");
+	//int x = 1;
+	//if (*(char *)&x == 1)
+	//	printf("Little endian\n");
+	//else
+	//	printf("Big endian\n");
+	int n = ft_atoi_base(av[1], av[2]);
+	printf("%d\n", n);
 }

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/16 17:06:07 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:37:51 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,58 +60,6 @@ int	get_height(char *filename)
 	return (rows);
 }
 
-//void	populate_table(int **z, char *line, int width)
-//{
-//	char	**cords;
-//	int		i;
-//	int		index;
-
-//	cords = ft_split(line, ' ');
-//	i = 0;
-//	while (cords[i] && i < width)
-//	{
-//		z[i] = malloc(sizeof(int) * 2);
-//		if (!z[i])
-//			return ;
-//		z[i][0] = ft_atoi(cords[i]);
-//		index = 0;
-//		while (cords[i][index] != ',' && cords[i][index])
-//			index++;
-//		if (cords[i][index] == ',')
-//			z[i][1] = ft_atoi_base(&cords[i][index + 1], "0123456789ABCDEF");
-//		else
-//			z[i][1] = -1;
-//		free(cords[i]);
-//		i++;
-//	}
-//	free(cords);
-//}
-
-//void	parse_map(t_map *map, char *file)
-//{
-//	int		f;
-//	char	*line;
-//	int		i;
-
-//	f = open(file, O_RDONLY);
-//	if (f == -1)
-//		return ;
-//	map->height = get_height(file);
-//	map->width = get_width(file);
-//	map->z_coord = malloc(sizeof(int **) * map->height);
-//	i = 0;
-//	while (1)
-//	{
-//		map->z_coord[i] = malloc(sizeof(int *) * map->width);
-//		line = get_next_line(f);
-//		if (!line || !*line)
-//			return ;
-//		 populate_table(map->z_coord[i++], line, map->width);
-//		 free(line);
-//	}
-//	close(f);
-//}
-
 void	get_coords(char *line, int width, int **z)
 {
 	char	**coords;
@@ -126,15 +74,13 @@ void	get_coords(char *line, int width, int **z)
 		z[i] = malloc(sizeof(int) * 2);
 		if (!z[i])
 			exit(EXIT_FAILURE);
-		ft_printf("%d\n", ft_atoi(coords[i]));
 		z[i][0] = ft_atoi(coords[i]);
-		ft_printf("test\n");
-		while (coords[i][j] != ',')
+		while (coords[i][j] != ',' && coords[i][j])
 			j++;
 		if (coords[i][j] == ',')
 			z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
 		else
-			z[i][1] = 0;
+			z[i][1] = -1;
 		free(coords[i]);
 	}
 	free(coords);
@@ -153,11 +99,11 @@ void	parse_map(char *file, t_map *map)
 	map->height = get_height(file);
 	map->width = get_width(file);
 	map->z_coord = malloc(sizeof(int **) * map->height);
-	i = 0;
+	i = -1;
 	while (line)
 	{
-		map->z_coord = malloc(sizeof(int *) * map->width);
-		get_coords(line, map->width, map->z_coord[i++]);
+		map->z_coord[++i] = malloc(sizeof(int *) * map->width);
+		get_coords(line, map->width, map->z_coord[i]);
 		free(line);
 		line = get_next_line(op_file);
 	}
