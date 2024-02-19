@@ -12,24 +12,34 @@
 
 #include "fdf.h"
 
+// void	pixel_put(t_data *img, int x, int y, unsigned int color)
+// {
+// 	char	*pixel;
+//
+// 	pixel = img->addr + (y * img->line_length) + (x * (img->bpp / 8));
+// 	*(unsigned int *)pixel = color;
+// }
+
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
 	char	*p;
 
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		p = mlx->img.addr + y * mlx->img.line_length + x * (mlx->img.bpp / 8);
-		*(int *)p = color;
+		p = mlx->img.addr + (y * mlx->img.line_length) + (x * (mlx->img.bpp / 8));
+		*(unsigned int *)p = color;
 	}
 }
 
 int	keypress(int keycode, t_mlx *mlx)
 {
-	if (keycode == 53)
+	if (keycode == 53 || keycode == 65307)
+	{
 		mlx_destroy_window(mlx->mlx, mlx->mlx_window);
-	(void)mlx;
+		exit(EXIT_SUCCESS);
+	}
 	ft_printf("%d\n", keycode);
-	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 int main(int ac, char **av)
@@ -44,8 +54,21 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
-	ft_printf("Map height %d\n", mlx.map->height);
-	ft_printf("Map width %d\n", mlx.map->width);
+	ft_printf("Main %p\n", mlx.img.addr);
+	// for chromebook only
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+			pixel_put(&mlx, j, i, 0x000000);
+		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	}
+	for (int i = 0; i < mlx.map->height; i++)
+	{
+		for (int j = 0; j < mlx.map->width; j++)
+			ft_printf("%2d ", mlx.map->z_coord[i][j][0]);
+		ft_printf("\n");
+	}
+	draw(&mlx);
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
 	mlx_loop(mlx.mlx);
 }
@@ -65,3 +88,4 @@ int main(int ac, char **av)
 //	free(mlx->mlx);
 //	(void)av;
 //}
+

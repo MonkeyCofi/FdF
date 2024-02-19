@@ -30,13 +30,13 @@ BON_OBJ = 	$(BON_SRC:.c=.o)
 all: $(PRINTF) $(NAME)
 
 $(NAME): $(OBJS) $(GNL_OBJ)
-	@ar -rcs $@ $^
+	ar -rcs $@ $^
 
 $(PRINTF):
 	make -C ft_printf/
 
 %.o: %.c
-	@$(CC) $(FLAGS) -c $^ -o $@
+	$(CC) $(FLAGS) -c $^ -o $@
 
 .PHONY: clean fclean all bonus re
 
