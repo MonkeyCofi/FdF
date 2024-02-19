@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/16 16:34:45 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:26:16 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ int		ft_atoi_base(char *str, char *base);
 // temp
 /* void	pixel_put(t_data *img, int x, int y, unsigned int color); */
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
-/* void	draw_line(t_data *img, int xstart, int xend, int ystart, int yend); */
-/* void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend); */
-void	draw_line(t_mlx *mlx, t_point one, t_point two);
+void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
+//void	draw_line(t_mlx *mlx, t_point one, t_point two);
 void	draw(t_mlx *mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/17 16:37:41 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:55:14 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,13 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
-	ft_printf("Main %p\n", mlx.img.addr);
 	// for chromebook only
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-			pixel_put(&mlx, j, i, 0x000000);
-		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	}
+	//for (int i = 0; i < HEIGHT; i++)
+	//{
+	//	for (int j = 0; j < WIDTH; j++)
+	//		pixel_put(&mlx, j, i, 0x000000);
+	//	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	//}
 	for (int i = 0; i < mlx.map->height; i++)
 	{
 		for (int j = 0; j < mlx.map->width; j++)
