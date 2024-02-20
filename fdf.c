@@ -55,18 +55,23 @@ int main(int ac, char **av)
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
 	// for chromebook only
-	//for (int i = 0; i < HEIGHT; i++)
-	//{
-	//	for (int j = 0; j < WIDTH; j++)
-	//		pixel_put(&mlx, j, i, 0x000000);
-	//	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	//}
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+			pixel_put(&mlx, j, i, 0x000000);
+		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	}
 	for (int i = 0; i < mlx.map->height; i++)
 	{
 		for (int j = 0; j < mlx.map->width; j++)
 			ft_printf("%2d ", mlx.map->z_coord[i][j][0]);
 		ft_printf("\n");
 	}
+	// block of code to zoom into image
+	t_cam cam;
+	cam.zoom = 2;
+	mlx.map->height *= cam.zoom;
+	mlx.map->width *= cam.zoom;
 	draw(&mlx);
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
 	mlx_loop(mlx.mlx);

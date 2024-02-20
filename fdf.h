@@ -33,6 +33,11 @@ typedef struct	s_data
 	int		endian;
 }	t_data;
 
+typedef struct	s_cam
+{
+	int	zoom;
+}	t_cam;
+
 typedef struct	s_map
 {
 	int	height;

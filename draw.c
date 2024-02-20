@@ -45,15 +45,16 @@ void	draw(t_mlx *mlx)
 	int	j;
 
 	i = -1;
+	j = -1;
 	while(++i < mlx->map->height)
 	{
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			if (j < mlx->map->width)
+			if (j + 1 < mlx->map->width)
 				draw_line(mlx, j, j + 1, i, i);
-			if (i < mlx->map->height)
-				draw_line(mlx, j, j, i, i + 1);
+			// if (i + 1 < mlx->map->height)
+			// 	draw_line(mlx, j, j, i, i + 1);
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 200, 200);
@@ -161,6 +162,7 @@ void	draw(t_mlx *mlx)
  	int		steps;
  	float	xinc;
  	float	yinc;
+	int		i;
 
  	dx = xend - xstart;
  	dy = yend - ystart;
@@ -170,12 +172,15 @@ void	draw(t_mlx *mlx)
  		steps = absolute(dy);
  	xinc = dx / (float)steps;
  	yinc = dy / (float)steps;
- 	while (steps--)
+	i = -1;
+ 	while (++i < steps)
  	{
- 		pixel_put(mlx, xstart, yend, 0xFFFF00);
- 		xstart += xinc;
- 		ystart += yinc;
+ 		pixel_put(mlx, xstart, ystart, 0xFFFFFF);
+ 		xstart += round(xinc);
+ 		ystart += round(yinc);
  	}
  }
+
+
 
 //// void	fill_points(t_point)

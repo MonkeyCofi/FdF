@@ -17,7 +17,7 @@ OS_NAME=$(shell uname)
 ifeq ($(OS_NAME), Linux)
 MLXOS = minilibx-linux
 MLXFLAGS = -Lminilibx-linux -lmlx -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
-MLXOBJ =  -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c
+MLXOBJ =  -Wall -Wextra -Werror -I/usr/include -Iminilibx-linux -O3 -c
 
 else
 MLXOS = mlx
