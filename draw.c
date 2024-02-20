@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/20 14:31:25 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:32:40 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,29 @@ int	absolute(int value)
 	return (value);
 }
 
-//void	draw(t_mlx *mlx)
-//{
-//	int	x;
-//	int	y;
+int	***arr(t_mlx *mlx, int height, int width, int scale)
+{
+	int	i;
+	int	j;
+	int	***arr;
 
-//	x = 0;
-//	y = 0;
-//	while (y < mlx->map->height)
-//	{
-//		while (x < mlx->map->width)
-//		{
-//			draw_line(mlx, x, )
-//			x++;
-//		}
-//		y++;
-//	}
-//	mlx_put_image_to_window(mlx, mlx->mlx_window, mlx->img.img, 200, 200);
-//}
+	i = -1;
+	arr = malloc(sizeof(int **) * height);
+	while (++i < height)
+	{
+		arr[i] = malloc(sizeof(int *) * width);
+		j = -1;
+		while (++j < width)
+		{
+			arr[i][j] = malloc(sizeof(int));
+			arr[i][j][0] = mlx->map->z_coord[i][j][0] * scale;
+			ft_printf("%3d ", arr[i][j][0]);
+		}
+		ft_printf("\n");
+	}
+	(void)scale;
+	return (arr);
+}
 
 void	draw(t_mlx *mlx)
 {
@@ -47,6 +52,7 @@ void	draw(t_mlx *mlx)
 
 	scale = 30;
 	i = -1;
+	j = -1;
 	while(++i < mlx->map->height)
 	{
 		j = -1;
@@ -58,7 +64,8 @@ void	draw(t_mlx *mlx)
 				draw_line(mlx, j * scale, j * scale, i * scale, (i + 1) * scale);
 		}
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
+	arr(mlx, mlx->map->height, mlx->map->width, scale);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 300, 300);
 }
 
 //void	draw(t_mlx *mlx)
@@ -163,6 +170,7 @@ void	draw(t_mlx *mlx)
  	int		steps;
  	float	xinc;
  	float	yinc;
+	int		i;
 
  	dx = xend - xstart;
  	dy = yend - ystart;
@@ -172,12 +180,15 @@ void	draw(t_mlx *mlx)
  		steps = absolute(dy);
  	xinc = dx / (float)steps;
  	yinc = dy / (float)steps;
- 	while (steps--)
+	i = -1;
+ 	while (++i < steps)
  	{
  		pixel_put(mlx, xstart, ystart, 0xFFFF00);
  		xstart += xinc;
  		ystart += yinc;
  	}
  }
+
+
 
 //// void	fill_points(t_point)

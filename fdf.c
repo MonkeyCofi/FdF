@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/19 12:55:14 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:30:19 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // 	pixel = img->addr + (y * img->line_length) + (x * (img->bpp / 8));
 // 	*(unsigned int *)pixel = color;
 // }
+
 
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
@@ -61,13 +62,14 @@ int main(int ac, char **av)
 	//		pixel_put(&mlx, j, i, 0x000000);
 	//	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	//}
+	// block of code to zoom into image
+	draw(&mlx);
 	for (int i = 0; i < mlx.map->height; i++)
 	{
 		for (int j = 0; j < mlx.map->width; j++)
 			ft_printf("%2d ", mlx.map->z_coord[i][j][0]);
 		ft_printf("\n");
 	}
-	draw(&mlx);
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
 	mlx_loop(mlx.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/19 20:26:16 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:38:38 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 # include <stdio.h>
 # include <math.h>
 
-# define HEIGHT 320
-# define WIDTH 640
+//# define HEIGHT 320
+//# define WIDTH 640
+# define HEIGHT 1080
+# define WIDTH 1920
 
 typedef struct	s_data
 {
@@ -32,6 +34,11 @@ typedef struct	s_data
 	int		line_length;
 	int		endian;
 }	t_data;
+
+typedef struct	s_cam
+{
+	int	zoom;
+}	t_cam;
 
 typedef struct	s_map
 {

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/17 16:37:51 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:04:01 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	parse_map(char *file, t_map *map)
 	line = get_next_line(op_file);
 	map->height = get_height(file);
 	map->width = get_width(file);
+	ft_printf("height: %d\n", map->height);
+	ft_printf("width: %d\n", map->width);
 	map->z_coord = malloc(sizeof(int **) * map->height);
 	i = -1;
 	while (line)
