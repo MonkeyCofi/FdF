@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/19 20:30:15 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:31:25 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,22 @@ void	draw(t_mlx *mlx)
 {
 	int	i;
 	int	j;
+	int	scale;
 
+	scale = 30;
 	i = -1;
 	while(++i < mlx->map->height)
 	{
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			if (j < mlx->map->width)
-				draw_line(mlx, j, j + 1, i, i);
-			if (i < mlx->map->height)
-				draw_line(mlx, j, j, i, i + 1);
+			if (j < mlx->map->width - 1)
+				draw_line(mlx, j * scale, (j + 1) * scale, i * scale, i * scale);
+			if (i < mlx->map->height - 1)
+				draw_line(mlx, j * scale, j * scale, i * scale, (i + 1) * scale);
 		}
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 200, 200);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
 }
 
 //void	draw(t_mlx *mlx)
@@ -172,7 +174,7 @@ void	draw(t_mlx *mlx)
  	yinc = dy / (float)steps;
  	while (steps--)
  	{
- 		pixel_put(mlx, xstart, yend, 0xFFFF00);
+ 		pixel_put(mlx, xstart, ystart, 0xFFFF00);
  		xstart += xinc;
  		ystart += yinc;
  	}
