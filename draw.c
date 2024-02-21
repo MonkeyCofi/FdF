@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 22:52:31 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 23:37:20 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,6 @@ void	draw(t_mlx *mlx)
  	int		steps;
  	float	xinc;
  	float	yinc;
-	int		i;
 	float	x;
 	float	y;
 
@@ -199,14 +198,10 @@ void	draw(t_mlx *mlx)
  		steps = absolute(dy);
  	xinc = dx / (float)steps;
  	yinc = dy / (float)steps;
-	i = -1;
 	x = xstart;
 	y = ystart;
- 	while (++i < steps)
+ 	while (steps--)
  	{
- 		//pixel_put(mlx, xstart, ystart, 0xFFFF00);
- 		//xstart += xinc;
- 		//ystart += yinc;
 		pixel_put(mlx, x, y, 0xFFFF00);
 		x += xinc;
 		y += yinc;

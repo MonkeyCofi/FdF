@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 22:54:26 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:20:30 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	project(t_mlx *mlx, float ***point_array)
 {
-	apply_transformation(point_array, return_matrix('y', 0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	(void)mlx; (void)point_array;
+	apply_transformation(point_array, return_matrix('y', -0.5 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('z', 1.7 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	
+	apply_transformation(point_array, return_matrix('x', 0.25 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
 int	keypress(int keycode, t_mlx *mlx)
@@ -60,7 +65,8 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
-	// for chromebook only
+	
+	/* for chromebook only */
 	//{
 	//	for (int i = 0; i < HEIGHT; i++)
 	//	{
@@ -69,7 +75,8 @@ int main(int ac, char **av)
 	//		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	//	}
 	//}
-	// block of code to zoom into image
+	/* for chromebook only */
+	
 	//draw(&mlx);
 	for (int i = 0; i < mlx.map->height; i++)
 	{
@@ -88,6 +95,17 @@ int main(int ac, char **av)
 		j = -1;
 		while (++j < mlx.map->width)
 		{
+			array[i][j][0] += 1000;
+			array[i][j][2] += 400; // up down funk you up
+		}
+	}
+	i = -1;
+	ft_printf("anus: %d\n", mlx.map->height);
+	while (++i < mlx.map->height)
+	{
+		j = -1;
+		while (++j < mlx.map->width)
+		{
 			printf("%2.0f ", array[i][j][0]);
 			printf("%2.0f ", array[i][j][2]);
 			if (j < mlx.map->width - 1)
@@ -95,10 +113,14 @@ int main(int ac, char **av)
 				draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
 			if (i < mlx.map->height - 1)
 				draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
+			if (j < mlx.map->width - 1 && i < mlx.map->height - 1)
+				draw_line(&mlx,array[i][j][0],array[i + 1][j + 1][0],array[i][j][2],array[i + 1][j + 1][2]);
+			//if (j > 0 && i < mlx.map->height - 1)
+			//	draw_line(&mlx,array[i][j][0],array[i + 1][j - 1][0],array[i][j][2],array[i + 1][j - 1][2]);
 		}
 		printf("\n");
 	}
-	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 500, 120);
+	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }
 
