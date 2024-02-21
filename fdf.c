@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 22:43:21 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 22:54:26 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	project(t_mlx *mlx, float ***point_array)
 {
-	apply_transformation(point_array, return_matrix('y', 0.01 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', 0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
 int	keypress(int keycode, t_mlx *mlx)
@@ -79,9 +79,7 @@ int main(int ac, char **av)
 	}
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
 	float ***array = return_array(&mlx, mlx.map->height, mlx.map->width, 25); // CORRECT COMPLETELY
-	//ft_printf("element at array[0][0][0]: %f\n", array[0][0][0]);
 	project(&mlx, array);
-	printf("%f, %f, %f\n", array[0][0][0], array[0][0][1], array[0][0][2]);
 	int		i;
 	int		j;
 	i = -1;
@@ -93,13 +91,14 @@ int main(int ac, char **av)
 			printf("%2.0f ", array[i][j][0]);
 			printf("%2.0f ", array[i][j][2]);
 			if (j < mlx.map->width - 1)
+				//draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
 				draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
 			if (i < mlx.map->height - 1)
 				draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
 		}
 		printf("\n");
 	}
-	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 90, 90);
+	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 500, 120);
 	mlx_loop(mlx.mlx);
 }
 
