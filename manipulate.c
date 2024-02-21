@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:53:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 18:18:57 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 22:12:05 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ float	**matrix_x(float angle)
 	int		i;
 	int		j;
 
-	matrix = malloc(sizeof(int *) * 3);
+	matrix = malloc(sizeof(float *) * 3);
 	i = -1;
 	while (++i < 3)
 	{
 		j = -1;
-		matrix[i] = malloc(sizeof(int) * 3);
+		matrix[i] = malloc(sizeof(float) * 3);
 		while (++j < 3)
 		{
 			if (i == 0 && j == 0)
@@ -47,11 +47,11 @@ float	**matrix_y(float angle)
 	int		i;
 	int		j;
 
-	matrix = malloc(sizeof(int *) * 3);
+	matrix = malloc(sizeof(float *) * 3);
 	i = -1;
 	while (++i < 3)
 	{
-		matrix[i] = malloc(sizeof(int) * 3);
+		matrix[i] = malloc(sizeof(float) * 3);
 		j = -1;
 		while (++j < 3)
 		{
@@ -76,11 +76,11 @@ float	**matrix_z(float angle)
 	int		i;
 	int		j;
 
-	matrix = malloc(sizeof(int *) * 3);
+	matrix = malloc(sizeof(float *) * 3);
 	i = -1;
 	while (++i < 3)
 	{
-		matrix[i] = malloc(sizeof(int) * 3);
+		matrix[i] = malloc(sizeof(float) * 3);
 		j = -1;
 		while (++j < 3)
 		{
@@ -109,7 +109,7 @@ float	**return_matrix(char axis, float angle)
 		return (matrix_z(angle));
 
 }
-
+#include <stdio.h>
 void	apply_transformation(float ***arr, float **matrix, int height, int width)
 {
 	int		i;
@@ -118,6 +118,10 @@ void	apply_transformation(float ***arr, float **matrix, int height, int width)
 	int		l;
 	float	simp[3];
 
+	for(i=0;i<3;i++)
+		{for(j=0;j<3;j++)
+			printf("%f ", matrix[i][j]);
+		printf("\n");}
 	i = -1;
 	while (++i < height)
 	{
@@ -127,10 +131,10 @@ void	apply_transformation(float ***arr, float **matrix, int height, int width)
 			k = -1;
 			while (++k < 3)
 			{
-				simp[l] = 0;
 				l = -1;
+				simp[k] = 0;
 				while (++l < 3)
-					simp[l] += arr[i][j][l] * matrix[k][l];
+					simp[k] += arr[i][j][l] * matrix[k][l];
 			}
 			while (k--)
 				arr[i][j][2 - k] = simp[2 - k];

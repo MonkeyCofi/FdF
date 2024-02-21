@@ -3,6 +3,7 @@
 		"mlx_int.h": "c",
 		"stdio.h": "c",
 		"_types.h": "c",
-		"fdf.h": "c"
+		"fdf.h": "c",
+		"ios": "c"
 	}
 }
