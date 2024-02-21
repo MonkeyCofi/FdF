@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 20:39:37 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:35:30 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,15 @@
 
 //# define HEIGHT 320
 //# define WIDTH 640
-# define HEIGHT 1080
-# define WIDTH 1920
+# ifdef __MACH__
+#  define HEIGHT 1080
+#  define WIDTH 1920
+#  define APP 1
+# else
+#  define HEIGHT 320
+#  define WIDTH 640
+#  define APP 0
+# endif
 
 typedef struct	s_data
 {
