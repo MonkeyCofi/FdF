@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 23:37:20 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:27:22 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ float	***return_array(t_mlx *mlx, int height, int width, int scale)
 		while (++j < width)
 		{
 			point_arr[i][j] = malloc(sizeof(float) * 3);
-			point_arr[i][j][0] = i * scale;
+			point_arr[i][j][0] = j * scale;
 			point_arr[i][j][1] = mlx->map->z_coord[i][j][0] * scale;
-			point_arr[i][j][2] = j * scale;
+			point_arr[i][j][2] = i * scale;
 		}
 	}
 	return (point_arr);

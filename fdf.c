@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 00:20:30 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:33:16 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 void	project(t_mlx *mlx, float ***point_array)
 {
 	(void)mlx; (void)point_array;
-	apply_transformation(point_array, return_matrix('y', -0.5 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('z', 1.7 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', 0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	
-	apply_transformation(point_array, return_matrix('x', 0.25 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('z', 0.15 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
@@ -57,7 +57,8 @@ int main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	if (ac != 2)
+	// last argument is temporarily the scale
+	if (ac != 3)
 	{
 		ft_printf("Usage: ./fdf [mapfile]\n");
 		exit(EXIT_FAILURE);
@@ -85,7 +86,8 @@ int main(int ac, char **av)
 		ft_printf("\n");
 	}
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
-	float ***array = return_array(&mlx, mlx.map->height, mlx.map->width, 25); // CORRECT COMPLETELY
+	int scale = ft_atoi(av[ac - 1]);
+	float ***array = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY
 	project(&mlx, array);
 	int		i;
 	int		j;
@@ -95,8 +97,8 @@ int main(int ac, char **av)
 		j = -1;
 		while (++j < mlx.map->width)
 		{
-			array[i][j][0] += 1000;
-			array[i][j][2] += 400; // up down funk you up
+			array[i][j][0] += 500;
+			array[i][j][2] += 600; // up down funk you up
 		}
 	}
 	i = -1;
@@ -111,10 +113,10 @@ int main(int ac, char **av)
 			if (j < mlx.map->width - 1)
 				//draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
 				draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
-			if (i < mlx.map->height - 1)
-				draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
 			if (j < mlx.map->width - 1 && i < mlx.map->height - 1)
 				draw_line(&mlx,array[i][j][0],array[i + 1][j + 1][0],array[i][j][2],array[i + 1][j + 1][2]);
+			if (i < mlx.map->height - 1)
+				draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
 			//if (j > 0 && i < mlx.map->height - 1)
 			//	draw_line(&mlx,array[i][j][0],array[i + 1][j - 1][0],array[i][j][2],array[i + 1][j - 1][2]);
 		}
