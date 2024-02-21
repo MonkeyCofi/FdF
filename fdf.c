@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/20 16:30:19 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:40:12 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int main(int ac, char **av)
 		ft_printf("\n");
 	}
 	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
+	int ***array = return_array(&mlx, mlx.map->height, mlx.map->width, 3);
 	mlx_loop(mlx.mlx);
 }
 

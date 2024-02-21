@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/20 14:38:38 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:36:10 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,13 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
 //void	draw_line(t_mlx *mlx, t_point one, t_point two);
 void	draw(t_mlx *mlx);
+int		***return_array(t_mlx *mlx, int height, int width, int scale);
+
+/* manipulate */
+float	**matrix_x(float angle);
+float	**matrix_y(float angle);
+float	**matrix_z(float angle);
+float	**return_matrix(char axis, float angle);
+void	apply_transformation(float ***arr, float **matrix, int height, int width);
 
 #endif

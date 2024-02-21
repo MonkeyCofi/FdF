@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/20 16:32:40 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:53:35 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,54 @@ int	absolute(int value)
 	return (value);
 }
 
-int	***arr(t_mlx *mlx, int height, int width, int scale)
+int	***return_array(t_mlx *mlx, int height, int width, int scale)
 {
+	int	***point_arr;
 	int	i;
 	int	j;
-	int	***arr;
 
+	point_arr = malloc(sizeof(int **) * height);
 	i = -1;
-	arr = malloc(sizeof(int **) * height);
 	while (++i < height)
 	{
-		arr[i] = malloc(sizeof(int *) * width);
+		point_arr[i] = malloc(sizeof(int *) * width);
 		j = -1;
 		while (++j < width)
 		{
-			arr[i][j] = malloc(sizeof(int));
-			arr[i][j][0] = mlx->map->z_coord[i][j][0] * scale;
-			ft_printf("%3d ", arr[i][j][0]);
+			point_arr[i][j] = malloc(sizeof(int) * 3);
+			point_arr[i][j][0] = i * scale;
+			point_arr[i][j][1] = j * scale;
+			point_arr[i][j][2] = mlx->map->z_coord[i][j][0] * scale;
 		}
-		ft_printf("\n");
+		(void)scale;
 	}
-	(void)scale;
-	return (arr);
+	return (point_arr);
 }
 
-void	draw(t_mlx *mlx)
+//void	draw(t_mlx *mlx)
+//{
+//	int	i;
+//	int	j;
+//	int	scale;
+
+//	scale = 30;
+//	i = -1;
+//	j = -1;
+//	while(++i < mlx->map->height)
+//	{
+//		j = -1;
+//		while (++j < mlx->map->width)
+//		{
+//			if (j < mlx->map->width - 1)
+//				draw_line(mlx, j * scale, (j + 1) * scale, i * scale, i * scale);
+//			if (i < mlx->map->height - 1)
+//				draw_line(mlx, j * scale, j * scale, i * scale, (i + 1) * scale);
+//		}
+//	}
+//	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 300, 300);
+//}
+
+void	draw(t_mlx *mlx, int ***point_array)
 {
 	int	i;
 	int	j;
@@ -64,7 +87,6 @@ void	draw(t_mlx *mlx)
 				draw_line(mlx, j * scale, j * scale, i * scale, (i + 1) * scale);
 		}
 	}
-	arr(mlx, mlx->map->height, mlx->map->width, scale);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 300, 300);
 }
 
@@ -139,12 +161,9 @@ void	draw(t_mlx *mlx)
 //	float	y;
 //	t_line	line_vars;
 
-//	i = 0;
+//	i = -1;
 //	line_vars.dx = two.x - one.x;
 //	line_vars.dy = two.y - one.y;
-//	ft_printf("x1 %d x0 %d\n", two.x, one.x);
-//	ft_printf("dx %d\n", line_vars.dx);
-//	ft_printf("dy %d\n", line_vars.dy);
 //	if (absolute(line_vars.dx) > absolute(line_vars.dy))
 //		line_vars.steps = absolute(line_vars.dx);
 //	else
@@ -153,12 +172,11 @@ void	draw(t_mlx *mlx)
 //	line_vars.yinc = line_vars.dy / (float)line_vars.steps;
 //	x = one.x;
 //	y = one.y;
-//	while (i < line_vars.steps)
+//	while (++i < line_vars.steps)
 //	{
 //		pixel_put(mlx, round(x), round(y), 0xFF00FF);
 //		x += line_vars.xinc;
 //		y += line_vars.yinc;
-//		i++;
 //	}
 //}
 
