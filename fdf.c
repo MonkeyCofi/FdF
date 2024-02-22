@@ -58,7 +58,7 @@ int main(int ac, char **av)
 	t_mlx	mlx;
 
 	// last argument is temporarily the scale
-	if (ac != 3)
+	if (ac < 3)
 	{
 		ft_printf("Usage: ./fdf [mapfile]\n");
 		exit(EXIT_FAILURE);
@@ -68,14 +68,15 @@ int main(int ac, char **av)
 	parse_map(av[1], mlx.map);
 	
 	/* for chromebook only */
-	//{
-	//	for (int i = 0; i < HEIGHT; i++)
-	//	{
-	//		for (int j = 0; j < WIDTH; j++)
-	//			pixel_put(&mlx, j, i, 0x000000);
-	//		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	//	}
-	//}
+	if (!APP)
+	{
+		for (int i = 0; i < HEIGHT; i++)
+		{
+			for (int j = 0; j < WIDTH; j++)
+				pixel_put(&mlx, j, i, 0x000000);
+			mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+		}
+	}
 	/* for chromebook only */
 	
 	//draw(&mlx);
@@ -97,12 +98,11 @@ int main(int ac, char **av)
 		j = -1;
 		while (++j < mlx.map->width)
 		{
-			array[i][j][0] += 500;
-			array[i][j][2] += 600; // up down funk you up
+			array[i][j][0] += 500 / (scale * 0.5);
+			array[i][j][2] += 600 / (scale * 0.5); // up down funk you up
 		}
 	}
 	i = -1;
-	ft_printf("anus: %d\n", mlx.map->height);
 	while (++i < mlx.map->height)
 	{
 		j = -1;

@@ -23,7 +23,7 @@
 
 //# define HEIGHT 320
 //# define WIDTH 640
-# ifdef __MACH__
+# ifdef __APPLE__
 #  define HEIGHT 1080
 #  define WIDTH 1920
 #  define APP 1
