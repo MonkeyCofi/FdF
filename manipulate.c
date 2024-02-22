@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:53:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 22:12:05 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:32:03 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ float	**return_matrix(char axis, float angle)
 		return (matrix_z(angle));
 
 }
-#include <stdio.h>
 void	apply_transformation(float ***arr, float **matrix, int height, int width)
 {
 	int		i;
@@ -118,10 +117,6 @@ void	apply_transformation(float ***arr, float **matrix, int height, int width)
 	int		l;
 	float	simp[3];
 
-	for(i=0;i<3;i++)
-		{for(j=0;j<3;j++)
-			printf("%f ", matrix[i][j]);
-		printf("\n");}
 	i = -1;
 	while (++i < height)
 	{

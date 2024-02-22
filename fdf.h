@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 00:35:30 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:55:33 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,16 @@ void	init_mlx(t_mlx *mlx);
 //void	init_map(t_mlx **mlx);
 void	init_map(t_mlx *mlx);
 int		ft_atoi_base(char *str, char *base);
+float	***return_array(t_mlx *mlx, int height, int width, int scale);
 
 // temp
 /* void	pixel_put(t_data *img, int x, int y, unsigned int color); */
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
-void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
-//void	draw_line(t_mlx *mlx, t_point one, t_point two);
-void	draw(t_mlx *mlx);
-float	***return_array(t_mlx *mlx, int height, int width, int scale);
+//void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
+void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color);
+// void	draw_line(t_mlx *mlx, t_point one, t_point two, int color);
+//void	draw(t_mlx *mlx);
+void	draw(t_mlx *mlx, float ***point_array);
 
 /* manipulate */
 float	**matrix_x(float angle);
@@ -102,5 +104,11 @@ float	**matrix_y(float angle);
 float	**matrix_z(float angle);
 float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int height, int width);
+
+/* hooks */
+int	escape(int keycode, t_mlx *mlx);
+int	translate(int keycode, float ***array, t_mlx *mlx);
+int	get_key_pressed(int keycode, t_mlx *mlx, int scale);
+int	zoom(int keycode, t_mlx *mlx, int scale, float ***array);
 
 #endif

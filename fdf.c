@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 00:33:16 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:12:02 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,45 @@
 // 	*(unsigned int *)pixel = color;
 // }
 
+int	change_color(t_mlx *mlx)
+{
+	int	i;
+	int	j;
+	int	color;
+
+	i = -1;
+	color = 0;
+	while (++i < HEIGHT)
+	{
+		j = -1;
+		while (++j < WIDTH)
+		{
+			pixel_put(mlx, i, j, color++ % 256);
+		}
+	}
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
+	return (0);
+}
+
+int	cont_draw(t_mlx *mlx, float ***array)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < HEIGHT)
+	{
+		j = -1;
+		while (++j < WIDTH)
+		{
+			pixel_put(mlx, i, j, 0x00FF00);
+		}
+	}
+	//draw(mlx, array);
+	mlx_put_image_to_window(mlx, mlx->mlx_window, mlx->img.img, 0, 0);
+	(void)array;
+	return (0);
+}
 
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
@@ -42,17 +81,6 @@ void	project(t_mlx *mlx, float ***point_array)
 	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
-int	keypress(int keycode, t_mlx *mlx)
-{
-	if (keycode == 53 || keycode == 65307)
-	{
-		mlx_destroy_window(mlx->mlx, mlx->mlx_window);
-		exit(EXIT_SUCCESS);
-	}
-	ft_printf("%d\n", keycode);
-	return (0);
-}
-#include <stdio.h>
 int main(int ac, char **av)
 {
 	t_mlx	mlx;
@@ -80,13 +108,8 @@ int main(int ac, char **av)
 	/* for chromebook only */
 	
 	//draw(&mlx);
-	for (int i = 0; i < mlx.map->height; i++)
-	{
-		for (int j = 0; j < mlx.map->width; j++)
-			ft_printf("%2d ", mlx.map->z_coord[i][j][0]);
-		ft_printf("\n");
-	}
-	mlx_key_hook(mlx.mlx_window, keypress, &mlx.mlx);
+	mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx.mlx);
+	mlx_mouse_hook(mlx.mlx_window, zoom, &mlx);
 	int scale = ft_atoi(av[ac - 1]);
 	float ***array = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY
 	project(&mlx, array);
@@ -98,47 +121,30 @@ int main(int ac, char **av)
 		j = -1;
 		while (++j < mlx.map->width)
 		{
-			array[i][j][0] += 500 / (scale * 0.5);
-			array[i][j][2] += 600 / (scale * 0.5); // up down funk you up
+			array[i][j][0] += 500;	// left and right
+			array[i][j][2] += 600;	// up and down
 		}
 	}
-	i = -1;
-	while (++i < mlx.map->height)
-	{
-		j = -1;
-		while (++j < mlx.map->width)
-		{
-			printf("%2.0f ", array[i][j][0]);
-			printf("%2.0f ", array[i][j][2]);
-			if (j < mlx.map->width - 1)
-				//draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
-				draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
-			if (j < mlx.map->width - 1 && i < mlx.map->height - 1)
-				draw_line(&mlx,array[i][j][0],array[i + 1][j + 1][0],array[i][j][2],array[i + 1][j + 1][2]);
-			if (i < mlx.map->height - 1)
-				draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
-			//if (j > 0 && i < mlx.map->height - 1)
-			//	draw_line(&mlx,array[i][j][0],array[i + 1][j - 1][0],array[i][j][2],array[i + 1][j - 1][2]);
-		}
-		printf("\n");
-	}
+	draw(&mlx, array);
+	//i = -1;
+	//while (++i < mlx.map->height)
+	//{
+	//	j = -1;
+	//	while (++j < mlx.map->width)
+	//	{
+	//		printf("%2.0f ", array[i][j][0]);
+	//		printf("%2.0f ", array[i][j][2]);
+	//		if (j < mlx.map->width - 1)
+	//			draw_line(&mlx,array[i][j][0],array[i][j + 1][0],array[i][j][2],array[i][j + 1][2]);
+	//		if (j < mlx.map->width - 1 && i < mlx.map->height - 1)
+	//			draw_line(&mlx,array[i][j][0],array[i + 1][j + 1][0],array[i][j][2],array[i + 1][j + 1][2]);
+	//		if (i < mlx.map->height - 1)
+	//			draw_line(&mlx,array[i][j][0],array[i + 1][j][0],array[i][j][2],array[i + 1][j][2]);
+	//		//if (j > 0 && i < mlx.map->height - 1)
+	//		//	draw_line(&mlx,array[i][j][0],array[i + 1][j - 1][0],array[i][j][2],array[i + 1][j - 1][2]);
+	//	}
+	//	printf("\n");
+	//}
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }
-
-//int main(int ac, char **av)
-//{
-//	t_mlx	*mlx;
-
-//	if (ac != 2)
-//		return (-1);
-//	mlx = init_mlx();
-//	init_map(&mlx);
-//	parse_map(mlx->map, av[1]);
-//	mlx_key_hook(mlx->mlx_window, keypress, &mlx->mlx);
-//	pixel_put(&mlx->img, 0, 0, 0xFF0000);
-//	mlx_loop(mlx);
-//	free(mlx->mlx);
-//	(void)av;
-//}
-
