@@ -24,6 +24,7 @@ void	init_mlx(t_mlx *mlx)
 	if (!mlx->img.img)
 		exit(EXIT_FAILURE);
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
+	mlx->points = NULL;
 }
 
 //t_mlx	*init_mlx()

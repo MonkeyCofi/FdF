@@ -12,73 +12,100 @@
 
 #include "fdf.h"
 
-int	zoom(int keycode, t_mlx *mlx, int scale, float ***array)
+int     draw_image(t_mlx *mlx)
 {
-	//if (keycode == 4)
-	//{
-			
-	//}
-	//(void)keycode, (void)mlx,(void)scale;
-	ft_printf("hehe\n");
-	(void)scale, (void)mlx, (void)keycode, (void)array;
-	return (0);
+        if (mlx->img.img)
+                mlx_destroy_image(mlx->mlx, mlx->img.img);
+        mlx->img.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
+        mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
+        // if (!APP)
+        // {
+        //         for (int i = 0; i < HEIGHT; i++)
+        //         {
+        //                 for (int j = 0; j < WIDTH; j++)
+        //                         pixel_put(mlx, j, i, 0x000000);
+        //                 mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
+        //         }
+        // }
+        draw(mlx);
+        mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
+        return (0);
 }
 
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 {
-	if (keycode == 53 || keycode == 655307)
-		escape(keycode, mlx);
-	else
-		zoom(keycode, mlx, scale, NULL);
-	return (0);
-}
-
-int	escape(int keycode, t_mlx *mlx)
-{
 	if (keycode == 53 || keycode == 65307)
-	{
-		mlx_destroy_image(mlx->mlx, mlx->img.img);
-		mlx_destroy_window(mlx->mlx, mlx->mlx_window);
-		exit(EXIT_SUCCESS);
-	}
+		escape(mlx);
+	else if (keycode == 119 || keycode == 97 || keycode == 115 || keycode == 100)
+		rotate_shape(mlx, keycode);
+	else
+		translate(mlx, keycode);
+	(void)scale;
+	ft_printf("Key pressed: %d\n", keycode);
 	return (0);
 }
 
-void	left(float ***array, int height, int width)
+void	rotate_shape(t_mlx *mlx, int keycode)
+{
+	float	angle;
+	// w=119
+	// a=97
+	// s=115
+	// d=100
+	angle = 0.01;
+	if (keycode == 119)
+		apply_transformation(mlx->points, return_matrix('z', angle++ * 3.1415), mlx->map->height, mlx->map->width);
+	draw_image(mlx);
+}
+
+void	move_points(t_mlx *mlx, int position)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (++i < height)
+	while (++i < mlx->map->height)
 	{
 		j = -1;
-		while (++j < width)
+		while (++j < mlx->map->width)
 		{
-			if (array[i][j][0] > 0)
-				array[i][j][0] -= 25;
+			if (position == 0)
+				mlx->points[i][j][2] -= 25;
+			else if (position == 1)
+				mlx->points[i][j][2] += 25;
+			else if (position == 2)
+				mlx->points[i][j][0] += 25;
+			else if (position == 3)
+				mlx->points[i][j][0] -= 25;
 		}
 	}
 }
 
-int	translate(int keycode, float ***array, t_mlx *mlx)
+// currently only for linux
+int	translate(t_mlx *mlx, int keycode)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	if (keycode == 123)
-	{
-		left(array, mlx->map->height, mlx->map->width);
-	}
+	// up: 65362
+	// left: 65361
+	// down: 65364
+	// right: 65363
+	if (keycode == 65362)
+		move_points(mlx, 0);
+	else if (keycode == 65364)
+		move_points(mlx, 1);
+	else if (keycode == 65363)
+		move_points(mlx, 2);
+	else if (keycode == 65361)
+		move_points(mlx, 3);
+	draw_image(mlx);
 	(void)mlx;
-	(void)j;
-	(void)array;
-	//left = 123
-	//right = 124
-	//down = 125
-	//up = 126
 	return (0);
 }
 
+int	escape(t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->mlx, mlx->img.img);
+	mlx_destroy_window(mlx->mlx, mlx->mlx_window);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
 

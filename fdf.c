@@ -20,46 +20,6 @@
 // 	*(unsigned int *)pixel = color;
 // }
 
-int	change_color(t_mlx *mlx)
-{
-	int	i;
-	int	j;
-	int	color;
-
-	i = -1;
-	color = 0;
-	while (++i < HEIGHT)
-	{
-		j = -1;
-		while (++j < WIDTH)
-		{
-			pixel_put(mlx, i, j, color++ % 256);
-		}
-	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
-	return (0);
-}
-
-int	cont_draw(t_mlx *mlx, float ***array)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < HEIGHT)
-	{
-		j = -1;
-		while (++j < WIDTH)
-		{
-			pixel_put(mlx, i, j, 0x00FF00);
-		}
-	}
-	//draw(mlx, array);
-	mlx_put_image_to_window(mlx, mlx->mlx_window, mlx->img.img, 0, 0);
-	(void)array;
-	return (0);
-}
-
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
 	char	*p;
@@ -81,12 +41,69 @@ void	project(t_mlx *mlx, float ***point_array)
 	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
+int	get_z_max(t_mlx *mlx)
+{
+	int	max;
+	int	i;
+	int	j;
+
+	max = 0;
+	i = -1;
+	while (++i < mlx->map->height)
+	{
+		j = -1;
+		while (++j < mlx->map->width)
+		{
+			if (mlx->map->z_coord[i][j][0] > max)
+				max = mlx->map->z_coord[i][j][0];
+		}
+	}
+	return (max);
+}
+
+void	get_default_position(t_mlx *mlx, float ***points, int scale)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < mlx->map->height)
+	{
+		j = -1;
+		while (++j < mlx->map->width)
+		{
+			points[i][j][0] += WIDTH / 2;
+			points[i][j][2] += HEIGHT / 2;
+		}
+	}
+	(void)scale;
+}
+
+int	get_default_scale(t_mlx *mlx)
+{
+	int		scale_height;
+	int		scale_width;
+	int		scale_z_height;
+	float	factor;
+
+	factor = 1.99;
+	scale_height = HEIGHT / (mlx->map->height * factor);
+	scale_width = WIDTH / (mlx->map->width * factor);
+	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);
+	if (scale_height <= scale_width)
+		return (scale_height);
+	else
+		return (scale_width);
+	return (scale_z_height);
+}
+
 int main(int ac, char **av)
 {
 	t_mlx	mlx;
-
-	// last argument is temporarily the scale
-	if (ac < 3)
+	int		scale;
+	
+	if (ac < 2)
 	{
 		ft_printf("Usage: ./fdf [mapfile]\n");
 		exit(EXIT_FAILURE);
@@ -94,38 +111,43 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
-	
+	scale = get_default_scale(&mlx);
+	mlx.points =  return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
 	/* for chromebook only */
-	if (!APP)
-	{
-		for (int i = 0; i < HEIGHT; i++)
-		{
-			for (int j = 0; j < WIDTH; j++)
-				pixel_put(&mlx, j, i, 0x000000);
-			mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-		}
-	}
+	// if (!APP)
+	// {
+	// 	for (int i = 0; i < HEIGHT; i++)
+	// 	{
+	// 		for (int j = 0; j < WIDTH; j++)
+	// 			pixel_put(&mlx, j, i, 0x000000);
+	// 		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	// 	}
+	// }
 	/* for chromebook only */
 	
-	//draw(&mlx);
-	mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx.mlx);
-	mlx_mouse_hook(mlx.mlx_window, zoom, &mlx);
-	int scale = ft_atoi(av[ac - 1]);
-	float ***array = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY
-	project(&mlx, array);
-	int		i;
-	int		j;
-	i = -1;
-	while (++i < mlx.map->height)
-	{
-		j = -1;
-		while (++j < mlx.map->width)
-		{
-			array[i][j][0] += 500;	// left and right
-			array[i][j][2] += 600;	// up and down
-		}
-	}
-	draw(&mlx, array);
+	// draw(&mlx);
+	// mlx_loop_hook(mlx.mlx, get_key_pressed, &mlx);
+	mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx);
+	project(&mlx, mlx.points);
+	get_default_position(&mlx, mlx.points, scale);
+	// int		i;
+	// int		j;
+	// i = -1;
+	// while (++i < mlx.map->height)
+	// {
+	// 	j = -1;
+	// 	while (++j < mlx.map->width)
+	// 	{
+	// 		array[i][j][0] += 200;	// left and right
+	// 		array[i][j][2] += 145;	// up and down
+	// 	}
+	// }
+	draw(&mlx);
+	mlx_loop(mlx.mlx);
+}
+
+
+
 	//i = -1;
 	//while (++i < mlx.map->height)
 	//{
@@ -145,6 +167,4 @@ int main(int ac, char **av)
 	//	}
 	//	printf("\n");
 	//}
-	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	mlx_loop(mlx.mlx);
-}
+	// mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);

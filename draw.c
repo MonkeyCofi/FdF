@@ -26,13 +26,12 @@
 //	return (1);
 //}
 
-int	get_color(t_mlx *mlx, int i, int j)
-{
-	if (mlx->map->z_coord[i][j][1] != -1)
-		return (mlx->map->z_coord[i][j][1]);
-	return (0xFFFFFF);
-}
-
+// int	get_color(t_mlx *mlx, int i, int j)
+// {
+// 	if (mlx->map->z_coord[i][j][1] != -1)
+// 		return (mlx->map->z_coord[i][j][1]);
+// 	return (0xFFFFFF);
+// }
 
 int	absolute(int value)
 {
@@ -41,7 +40,26 @@ int	absolute(int value)
 	return (value);
 }
 
-void	draw(t_mlx *mlx, float ***point_array)
+// void	draw(t_mlx *mlx, float ***point_array)
+// {
+// 	int	i;
+// 	int	j;
+//
+// 	i = -1;
+// 	while (++i < mlx->map->height)
+// 	{
+// 		j = -1;
+// 		while (++j < mlx->map->width)
+// 		{
+// 			if (j < mlx->map->width - 1)
+// 				draw_line(mlx, point_array[i][j][0], point_array[i][j + 1][0], point_array[i][j][2], point_array[i][j + 1][2], get_color(mlx, i, j));
+// 			if (i < mlx->map->height - 1)
+// 				draw_line(mlx, point_array[i][j][0], point_array[i + 1][j][0], point_array[i][j][2], point_array[i + 1][j][2], get_color(mlx, i, j));
+// 		}
+// 	}
+// }
+
+void	draw(t_mlx *mlx)
 {
 	int	i;
 	int	j;
@@ -53,13 +71,12 @@ void	draw(t_mlx *mlx, float ***point_array)
 		while (++j < mlx->map->width)
 		{
 			if (j < mlx->map->width - 1)
-				draw_line(mlx, point_array[i][j][0], point_array[i][j + 1][0], point_array[i][j][2], point_array[i][j + 1][2], get_color(mlx, i, j));
+				draw_line(mlx, mlx->points[i][j][0], mlx->points[i][j + 1][0], mlx->points[i][j][2], mlx->points[i][j + 1][2], get_color(mlx, i, j));
 			if (i < mlx->map->height - 1)
-				draw_line(mlx, point_array[i][j][0], point_array[i + 1][j][0], point_array[i][j][2], point_array[i + 1][j][2], get_color(mlx, i, j));
+				draw_line(mlx, mlx->points[i][j][0], mlx->points[i + 1][j][0], mlx->points[i][j][2], mlx->points[i + 1][j][2], get_color(mlx, i, j));
 		}
 	}
 }
-
 
 //void	draw(t_mlx *mlx, float ***point_array)
 //{

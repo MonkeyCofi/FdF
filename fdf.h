@@ -74,6 +74,7 @@ typedef struct	s_mlx
 {
 	void	*mlx;
 	void	*mlx_window;
+	float	***points;
 	t_data	img;
 	t_map	*map;
 }	t_mlx;
@@ -96,7 +97,7 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color);
 // void	draw_line(t_mlx *mlx, t_point one, t_point two, int color);
 //void	draw(t_mlx *mlx);
-void	draw(t_mlx *mlx, float ***point_array);
+void	draw(t_mlx *mlx);
 
 /* manipulate */
 float	**matrix_x(float angle);
@@ -106,9 +107,11 @@ float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int height, int width);
 
 /* hooks */
-int	escape(int keycode, t_mlx *mlx);
-int	translate(int keycode, float ***array, t_mlx *mlx);
+int	escape(t_mlx *mlx);
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale);
-int	zoom(int keycode, t_mlx *mlx, int scale, float ***array);
+int     get_color(t_mlx *mlx, int i, int j);
+int     draw_image(t_mlx *mlx);
+int		translate(t_mlx *mlx, int keycode);
+void	rotate_shape(t_mlx *mlx, int keycode);
 
 #endif
