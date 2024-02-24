@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 21:03:06 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:41:12 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	draw(t_mlx *mlx)
 				draw_line(mlx, mlx->points[i][j][0], mlx->points[i + 1][j][0], mlx->points[i][j][2], mlx->points[i + 1][j][2], get_color(mlx, i, j));
 		}
 	}
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
 }
 
 //void	draw(t_mlx *mlx, float ***point_array)

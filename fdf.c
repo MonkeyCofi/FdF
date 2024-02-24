@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 18:12:02 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/24 21:50:24 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	project(t_mlx *mlx, float ***point_array)
 {
-	(void)mlx; (void)point_array;
-	apply_transformation(point_array, return_matrix('y', 0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', -0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	
-	apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('z', 0.15 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -0.2 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('z', 0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
 
@@ -80,22 +79,27 @@ void	get_default_position(t_mlx *mlx, float ***points, int scale)
 	(void)scale;
 }
 
-int	get_default_scale(t_mlx *mlx)
+float	get_default_scale(t_mlx *mlx)
 {
-	int		scale_height;
-	int		scale_width;
-	int		scale_z_height;
+	float	scale_height;
+	float	scale_width;
+	float	scale_z_height;
 	float	factor;
 
 	factor = 1.99;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
 	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);
-	if (scale_height <= scale_width)
-		return (scale_height);
-	else
+	if (scale_width > scale_height)
 		return (scale_width);
+	else if (scale_height > scale_width)
+		return (scale_height);
 	return (scale_z_height);
+	//if (scale_height <= scale_width)
+	//	return (scale_height);
+	//else
+	//	return (scale_width);
+	//return (scale_z_height);
 }
 
 int main(int ac, char **av)
@@ -113,35 +117,12 @@ int main(int ac, char **av)
 	parse_map(av[1], mlx.map);
 	scale = get_default_scale(&mlx);
 	mlx.points =  return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
-	/* for chromebook only */
-	// if (!APP)
-	// {
-	// 	for (int i = 0; i < HEIGHT; i++)
-	// 	{
-	// 		for (int j = 0; j < WIDTH; j++)
-	// 			pixel_put(&mlx, j, i, 0x000000);
-	// 		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	// 	}
-	// }
-	/* for chromebook only */
-	
 	// draw(&mlx);
 	// mlx_loop_hook(mlx.mlx, get_key_pressed, &mlx);
-	mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx);
+	//mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx);
+	mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
 	project(&mlx, mlx.points);
 	get_default_position(&mlx, mlx.points, scale);
-	// int		i;
-	// int		j;
-	// i = -1;
-	// while (++i < mlx.map->height)
-	// {
-	// 	j = -1;
-	// 	while (++j < mlx.map->width)
-	// 	{
-	// 		array[i][j][0] += 200;	// left and right
-	// 		array[i][j][2] += 145;	// up and down
-	// 	}
-	// }
 	draw(&mlx);
 	mlx_loop(mlx.mlx);
 }

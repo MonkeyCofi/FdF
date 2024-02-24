@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 17:59:25 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/24 21:32:29 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,7 @@ int     draw_image(t_mlx *mlx)
                 mlx_destroy_image(mlx->mlx, mlx->img.img);
         mlx->img.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
         mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
-        // if (!APP)
-        // {
-        //         for (int i = 0; i < HEIGHT; i++)
-        //         {
-        //                 for (int j = 0; j < WIDTH; j++)
-        //                         pixel_put(mlx, j, i, 0x000000);
-        //                 mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
-        //         }
-        // }
         draw(mlx);
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
         return (0);
 }
 
@@ -53,8 +43,8 @@ void	rotate_shape(t_mlx *mlx, int keycode)
 	// s=115
 	// d=100
 	angle = 0.01;
-	if (keycode == 119)
-		apply_transformation(mlx->points, return_matrix('z', angle++ * 3.1415), mlx->map->height, mlx->map->width);
+	if (keycode == 119 || keycode == 1)
+		apply_transformation(mlx->points, return_matrix('z', 1 * 3.1415), mlx->map->height, mlx->map->width);
 	draw_image(mlx);
 }
 
@@ -70,13 +60,13 @@ void	move_points(t_mlx *mlx, int position)
 		while (++j < mlx->map->width)
 		{
 			if (position == 0)
-				mlx->points[i][j][2] -= 25;
+				mlx->points[i][j][2] -= 15;
 			else if (position == 1)
-				mlx->points[i][j][2] += 25;
+				mlx->points[i][j][2] += 15;
 			else if (position == 2)
-				mlx->points[i][j][0] += 25;
+				mlx->points[i][j][0] += 15;
 			else if (position == 3)
-				mlx->points[i][j][0] -= 25;
+				mlx->points[i][j][0] -= 15;
 		}
 	}
 }
@@ -88,16 +78,15 @@ int	translate(t_mlx *mlx, int keycode)
 	// left: 65361
 	// down: 65364
 	// right: 65363
-	if (keycode == 65362)
+	if (keycode == 65362 || keycode == 126)
 		move_points(mlx, 0);
-	else if (keycode == 65364)
+	else if (keycode == 65364 || keycode == 125)
 		move_points(mlx, 1);
-	else if (keycode == 65363)
+	else if (keycode == 65363 || keycode == 124)
 		move_points(mlx, 2);
-	else if (keycode == 65361)
+	else if (keycode == 65361 || keycode == 123)
 		move_points(mlx, 3);
 	draw_image(mlx);
-	(void)mlx;
 	return (0);
 }
 
