@@ -6,21 +6,11 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/24 21:32:29 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:15:38 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int     draw_image(t_mlx *mlx)
-{
-        if (mlx->img.img)
-                mlx_destroy_image(mlx->mlx, mlx->img.img);
-        mlx->img.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-        mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
-        draw(mlx);
-        return (0);
-}
 
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 {
@@ -30,8 +20,8 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 		rotate_shape(mlx, keycode);
 	else
 		translate(mlx, keycode);
-	(void)scale;
 	ft_printf("Key pressed: %d\n", keycode);
+	(void)scale;
 	return (0);
 }
 

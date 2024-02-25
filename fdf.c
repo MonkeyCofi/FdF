@@ -6,19 +6,11 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/24 21:50:24 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:53:59 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// void	pixel_put(t_data *img, int x, int y, unsigned int color)
-// {
-// 	char	*pixel;
-//
-// 	pixel = img->addr + (y * img->line_length) + (x * (img->bpp / 8));
-// 	*(unsigned int *)pixel = color;
-// }
 
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
@@ -34,8 +26,9 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 void	project(t_mlx *mlx, float ***point_array)
 {
 	apply_transformation(point_array, return_matrix('y', -0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	//apply_transformation(point_array, return_matrix('y', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	
-	apply_transformation(point_array, return_matrix('x', -0.2 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	apply_transformation(point_array, return_matrix('z', 0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 }
@@ -86,7 +79,7 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	factor = 1.99;
+	factor = 2.3;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
 	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);
@@ -95,11 +88,6 @@ float	get_default_scale(t_mlx *mlx)
 	else if (scale_height > scale_width)
 		return (scale_height);
 	return (scale_z_height);
-	//if (scale_height <= scale_width)
-	//	return (scale_height);
-	//else
-	//	return (scale_width);
-	//return (scale_z_height);
 }
 
 int main(int ac, char **av)
@@ -134,6 +122,7 @@ int main(int ac, char **av)
 	else
 		/* for linux */
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
+	mlx_mouse_hook(mlx.mlx_window, get_mouse_function, &mlx);
 	project(&mlx, mlx.points);
 	get_default_position(&mlx, mlx.points, scale);
 	draw(&mlx);

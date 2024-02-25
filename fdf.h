@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/22 17:55:33 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:31:09 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,24 @@ void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color
 //void	draw(t_mlx *mlx);
 void	draw(t_mlx *mlx);
 
-/* manipulate */
+/*	manipulate	*/
 float	**matrix_x(float angle);
 float	**matrix_y(float angle);
 float	**matrix_z(float angle);
 float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int height, int width);
 
-/* hooks */
-int	escape(t_mlx *mlx);
-int	get_key_pressed(int keycode, t_mlx *mlx, int scale);
+/*	hooks	*/
+int		escape(t_mlx *mlx);
+int		get_key_pressed(int keycode, t_mlx *mlx, int scale);
 int     get_color(t_mlx *mlx, int i, int j);
 int     draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
+
+void	zoom(t_mlx *mlx, float scale, int code);
+int		get_mouse_function(int code, int scale, t_mlx *mlx);
+
+/*	transform	*/
 
 #endif
