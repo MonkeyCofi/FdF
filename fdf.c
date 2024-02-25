@@ -117,13 +117,27 @@ int main(int ac, char **av)
 	parse_map(av[1], mlx.map);
 	scale = get_default_scale(&mlx);
 	mlx.points =  return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
+	if (!APP)
+	{
+		for (int i = 0; i < HEIGHT; i++)
+		{
+			for (int j = 0; j < WIDTH; j++)
+				pixel_put(&mlx, i, j, 0x000000);
+		}
+		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	}
 	// draw(&mlx);
-	// mlx_loop_hook(mlx.mlx, get_key_pressed, &mlx);
-	//mlx_key_hook(mlx.mlx_window, get_key_pressed, &mlx);
-	mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
+	
+	/* for mac */
+	if (APP)
+		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
+	else
+		/* for linux */
+		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
 	project(&mlx, mlx.points);
 	get_default_position(&mlx, mlx.points, scale);
 	draw(&mlx);
+	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }
 

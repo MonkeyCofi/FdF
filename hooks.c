@@ -37,12 +37,12 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 
 void	rotate_shape(t_mlx *mlx, int keycode)
 {
-	float	angle;
+	// float	angle;
 	// w=119
 	// a=97
 	// s=115
 	// d=100
-	angle = 0.01;
+	// angle = 0.01;
 	if (keycode == 119 || keycode == 1)
 		apply_transformation(mlx->points, return_matrix('z', 1 * 3.1415), mlx->map->height, mlx->map->width);
 	draw_image(mlx);
