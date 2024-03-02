@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/21 20:49:42 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:51:53 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ void	parse_map(char *file, t_map *map)
 	if (op_file < 0)
 		exit(EXIT_FAILURE);
 	line = get_next_line(op_file);
+	if (!line)
+	{
+		ft_putendl_fd("Map is empty", 2);
+		free(map);
+		close(op_file);
+		exit(EXIT_FAILURE);
+	}
 	map->height = get_height(file);
 	map->width = get_width(file);
 	map->z_coord = malloc(sizeof(int **) * map->height);

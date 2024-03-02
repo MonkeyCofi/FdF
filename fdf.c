@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/25 19:53:59 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/02 20:34:04 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	project(t_mlx *mlx, float ***point_array)
 {
-	apply_transformation(point_array, return_matrix('y', -0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	//apply_transformation(point_array, return_matrix('y', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	
-	apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('z', 0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	//apply_transformation(point_array, return_matrix('z', -0.6 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	/*										best projections															*/
+	//apply_transformation(point_array, return_matrix('y', -0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	//apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	//apply_transformation(point_array, return_matrix('z', 0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', -0.12 * 3.1415), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -0.2 * 3.1415), mlx->map->height, mlx->map->width);
+
+	(void)mlx;
+	(void)point_array;
 }
 
 int	get_z_max(t_mlx *mlx)
