@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/02 20:34:04 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/07 19:14:39 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 void	project(t_mlx *mlx, float ***point_array)
 {
 	/*										best projections															*/
-	//apply_transformation(point_array, return_matrix('y', -0.1 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	//apply_transformation(point_array, return_matrix('x', -0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	//apply_transformation(point_array, return_matrix('z', 0.3 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('y', -0.12 * 3.1415), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('x', -0.2 * 3.1415), mlx->map->height, mlx->map->width);
-
-	(void)mlx;
-	(void)point_array;
+	apply_transformation(point_array, return_matrix('z', 0.17 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -0.043 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', -0.2 * 3.14159265358979323), mlx->map->height, mlx->map->width);
+	
+	//apply_transformation(point_array, return_matrix('y', -0.12 * 3.1415), mlx->map->height, mlx->map->width);
+	//apply_transformation(point_array, return_matrix('x', -0.05 * 3.1415), mlx->map->height, mlx->map->width);
 }
 
 int	get_z_max(t_mlx *mlx)
@@ -58,18 +56,28 @@ int	get_z_max(t_mlx *mlx)
 
 void	get_default_position(t_mlx *mlx, float ***points, int scale)
 {
-	int	i;
-	int	j;
+	float	height;
+	float	width;
+	int		i;
+	int		j;
 
 	i = -1;
 	j = -1;
+	ft_printf("Map height: %d\n", mlx->map->height);
+	ft_printf("Map width: %d\n", mlx->map->width);
+	height = (HEIGHT / 2);
+	width = (WIDTH / 2);
+	printf("height: %f\n", height);
+	printf("width: %f\n", width);
 	while (++i < mlx->map->height)
 	{
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			points[i][j][0] += WIDTH / 2;
-			points[i][j][2] += HEIGHT / 2;
+			//points[i][j][0] += WIDTH / 2;
+			//points[i][j][2] += HEIGHT / 2;
+			points[i][j][0] += width;
+			points[i][j][2] += height;
 		}
 	}
 	(void)scale;
@@ -107,7 +115,7 @@ int main(int ac, char **av)
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
 	scale = get_default_scale(&mlx);
-	mlx.points =  return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
+	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
 	if (!APP)
 	{
 		for (int i = 0; i < HEIGHT; i++)
@@ -125,7 +133,7 @@ int main(int ac, char **av)
 	else
 		/* for linux */
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
-	mlx_mouse_hook(mlx.mlx_window, get_mouse_function, &mlx);
+	//mlx_mouse_hook(mlx.mlx_window, get_mouse_function, &mlx);
 	project(&mlx, mlx.points);
 	get_default_position(&mlx, mlx.points, scale);
 	draw(&mlx);

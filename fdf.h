@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/25 19:31:09 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:38:53 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ int     draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
 
-void	zoom(t_mlx *mlx, float scale, int code);
-int		get_mouse_function(int code, int scale, t_mlx *mlx);
+void	zoom(void *mlx, float scale, int code);
+int		get_mouse_function(int code, int scale, void *param);
 
 /*	transform	*/
 

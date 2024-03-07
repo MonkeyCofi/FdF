@@ -2,9 +2,14 @@
 
 int     get_color(t_mlx *mlx, int i, int j)
 {
-        if (mlx->map->z_coord[i][j][1] != -1)
-                return (mlx->map->z_coord[i][j][1]);
-        return (0xFFFFFF);
+	int	color;
+
+	if (mlx->map->z_coord[i][j][1] != -1)
+	{
+		color = 
+		return (mlx->map->z_coord[i][j][1]);
+	}
+	return (0xFFFFFF);
 }
 
 int	get_red(int color)
@@ -27,7 +32,5 @@ int		intify_color(int color)
 	int	new_color;
 
 	new_color = 0xFF;
-	(void)color;
-	(void)new_color;
 	return (1);
 }
