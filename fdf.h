@@ -28,8 +28,8 @@
 #  define WIDTH 1920
 #  define APP 1
 # else
-#  define HEIGHT 320
-#  define WIDTH 640
+#  define HEIGHT 720
+#  define WIDTH 1080
 #  define APP 0
 # endif
 
@@ -45,6 +45,8 @@ typedef struct	s_data
 typedef struct	s_cam
 {
 	int	zoom;
+	int	x_offset;
+	int	y_offset;
 }	t_cam;
 
 typedef struct	s_map
@@ -63,11 +65,19 @@ typedef struct	s_line
 	float	yinc;
 }	t_line;
 
+/* typedef struct	s_point */
+/* { */
+/* 	int	x; */
+/* 	int	y; */
+/* 	int	z; */
+/* }	t_point; */
+
 typedef struct	s_point
 {
-	int	x;
-	int	y;
-	int	z;
+	float	x;
+	float	y;
+	float	z;
+	int		color;
 }	t_point;
 
 typedef struct	s_mlx
@@ -77,6 +87,7 @@ typedef struct	s_mlx
 	float	***points;
 	t_data	img;
 	t_map	*map;
+	t_cam	*camera;
 }	t_mlx;
 
 //void	parse_map(t_map *map, char *file);
@@ -94,8 +105,8 @@ float	***return_array(t_mlx *mlx, int height, int width, int scale);
 /* void	pixel_put(t_data *img, int x, int y, unsigned int color); */
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
 //void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
-void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color);
-// void	draw_line(t_mlx *mlx, t_point one, t_point two, int color);
+/* void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color); */
+void	draw_line(t_mlx *mlx, t_point start, t_point end, int color);
 //void	draw(t_mlx *mlx);
 void	draw(t_mlx *mlx);
 
@@ -117,6 +128,11 @@ void	rotate_shape(t_mlx *mlx, int keycode);
 void	zoom(void *mlx, float scale, int code);
 int		get_mouse_function(int code, int scale, void *param);
 
+int		get_color(t_mlx *mlx, int i, int j);
+	float	get_current_percent(float start, float end, float current);
+int		gradient_color(int start, int end, float progress);
+
+t_point	return_point(float x, float y);
 /*	transform	*/
 
 #endif

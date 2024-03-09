@@ -13,26 +13,6 @@
 #include "fdf.h"
 #include <math.h>
 
-//void	fill_point(t_point *point, float ***array, int i, int j)
-//{
-//	point->x = array[i][j][0];
-//	point->z = array[i][j][2];
-//}
-//int	color_gradient(t_mlx *mlx, int i, int j)
-//{
-//	float	color;
-
-	
-//	return (1);
-//}
-
-// int	get_color(t_mlx *mlx, int i, int j)
-// {
-// 	if (mlx->map->z_coord[i][j][1] != -1)
-// 		return (mlx->map->z_coord[i][j][1]);
-// 	return (0xFFFFFF);
-// }
-
 int	absolute(int value)
 {
 	if (value < 0)
@@ -40,24 +20,19 @@ int	absolute(int value)
 	return (value);
 }
 
-// void	draw(t_mlx *mlx, float ***point_array)
-// {
-// 	int	i;
-// 	int	j;
-//
-// 	i = -1;
-// 	while (++i < mlx->map->height)
-// 	{
-// 		j = -1;
-// 		while (++j < mlx->map->width)
-// 		{
-// 			if (j < mlx->map->width - 1)
-// 				draw_line(mlx, point_array[i][j][0], point_array[i][j + 1][0], point_array[i][j][2], point_array[i][j + 1][2], get_color(mlx, i, j));
-// 			if (i < mlx->map->height - 1)
-// 				draw_line(mlx, point_array[i][j][0], point_array[i + 1][j][0], point_array[i][j][2], point_array[i + 1][j][2], get_color(mlx, i, j));
-// 		}
-// 	}
-// }
+float	get_frac(int x, int y, t_point start, t_point end)
+{
+	t_line	dda;
+	float	frac;
+
+	dda.dx = end.x - start.x;
+	dda.dy = end.y - start.y;
+	if (absolute(dda.dx) > absolute(dda.dy))
+		frac = get_current_percent(start.x, end.x, x);
+	else
+		frac = get_current_percent(start.y, end.y, y);
+	return (frac);
+}
 
 void	draw(t_mlx *mlx)
 {
@@ -70,113 +45,69 @@ void	draw(t_mlx *mlx)
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			if (j < mlx->map->width - 1)
-				draw_line(mlx, mlx->points[i][j][0], mlx->points[i][j + 1][0], mlx->points[i][j][2], mlx->points[i][j + 1][2], get_color(mlx, i, j));
 			if (i < mlx->map->height - 1)
-				draw_line(mlx, mlx->points[i][j][0], mlx->points[i + 1][j][0], mlx->points[i][j][2], mlx->points[i + 1][j][2], get_color(mlx, i, j));
+				draw_line(mlx, return_point(mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx->points[i + 1][j][0], mlx->points[i + 1][j][2]), get_color(mlx, i, j));
+			if (j < mlx->map->width - 1)
+				draw_line(mlx, return_point(mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx->points[i][j + 1][0], mlx->points[i][j + 1][2]), get_color(mlx, i, j));
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
 }
 
-//void	draw(t_mlx *mlx, float ***point_array)
-//{
-//	t_point	one;
-//	t_point	two;
-//	int	i;
-//	int	j;
+t_point	return_point(float x, float y)
+{
+	t_point	point;
 
-//	i = -1;
-//	while (++i < mlx->map->height)
-//	{
-//		j = -1;
-//		while (++j < mlx->map->width)
-//		{
-//			fill_point(&one, point_array, i, j);
-//			//one.y = point_array[i][j][2];
-//			//two.y = point_array[i][j + 1][2];
-//			if (j < mlx->map->width - 1)
-//			{
-//				fill_point(&two, point_array, i, j + 1);
-//				draw_line(mlx, one, two, 0xFFFFFF);
-//			}
-//				//draw_line(mlx, point_array[i][j][0], point_array[i][j + 1][0], point_array[i][j][2], point_array[i][j + 1][2]);
-//			//if (i < mlx->map->height - 1)
-//			//	draw_line(mlx, point_array[i][j][0], point_array[i + 1][j][0], point_array[i][j][2], point_array[i + 1][j][2]);
-//		}
-//	}
-//}
+	point.x = (float)x;
+	point.y = (float)y;
+	return (point);
+}
 
- void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color)
- {
- 	t_line	dda;
+ // void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color)
+ // {
+ // 	t_line	dda;
+ // float	x;
+ // float	y;
+ //
+ // 	dda.dx = xend - xstart;
+ // 	dda.dy = yend - ystart;
+ // 	if (absolute(dda.dx) > absolute(dda.dy))
+ // 		dda.steps = absolute(dda.dx);
+ // 	else
+ // 		dda.steps = absolute(dda.dy);
+ // 	dda.xinc = dda.dx / (float)dda.steps;
+ // 	dda.yinc = dda.dy / (float)dda.steps;
+ // x = xstart;
+ // y = ystart;
+ // 	while (dda.steps--)
+ // 	{
+ // 	pixel_put(mlx, x, y, color);
+ // 	x += dda.xinc;
+ // 	y += dda.yinc;
+ // }
+ // }
+
+
+void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
+{
+	t_line	dda;
 	float	x;
 	float	y;
 
- 	dda.dx = xend - xstart;
- 	dda.dy = yend - ystart;
+ 	dda.dx = end.x - start.x;
+ 	dda.dy = end.y - start.y;
  	if (absolute(dda.dx) > absolute(dda.dy))
- 		dda.steps = absolute(dda.dx);
+		dda.steps = absolute(dda.dx);
  	else
  		dda.steps = absolute(dda.dy);
  	dda.xinc = dda.dx / (float)dda.steps;
  	dda.yinc = dda.dy / (float)dda.steps;
-	x = xstart;
-	y = ystart;
+	x = start.x;
+	y = start.y;
  	while (dda.steps--)
  	{
-		pixel_put(mlx, x, y, color);
-		x += dda.xinc;
-		y += dda.yinc;
+	 	pixel_put(mlx, x, y, color);
+	 	x += dda.xinc;
+	 	y += dda.yinc;
 	}
- 	//float	dx;
- 	//float	dy;
- 	//int		steps;
- 	//float	xinc;
- 	//float	yinc;
-	//float	x;
-	//float	y;
-
- 	//dx = xend - xstart;
- 	//dy = yend - ystart;
- 	//if (absolute(dx) > absolute(dy))
- 	//	steps = absolute(dx);
- 	//else
- 	//	steps = absolute(dy);
- 	//xinc = dx / (float)steps;
- 	//yinc = dy / (float)steps;
-	//x = xstart;
-	//y = ystart;
- 	//while (steps--)
- 	//{
-	//	pixel_put(mlx, x, y, color);
-	//	x += xinc;
-	//	y += yinc;
-	//}
- }
-
-
-// void	draw_line(t_mlx *mlx, t_point one, t_point two, int color)
-// {
-// 	t_line	dda;
-//	float	x;
-//	float	y;
-
-// 	dda.dx = two.x - one.x;
-//	dda.dy = two.y - one.y;
-// 	if (absolute(dda.dx) > absolute(dda.dy))
-// 		dda.steps = absolute(dda.dx);
-// 	else
-// 		dda.steps = absolute(dda.dy);
-// 	dda.xinc = dda.dx / (float)dda.steps;
-// 	dda.yinc = dda.dy / (float)dda.steps;
-//	x = one.x;
-//	y = one.y;
-// 	while (dda.steps--)
-// 	{
-//		pixel_put(mlx, x, y, color);
-//		x += dda.xinc;
-//		y += dda.yinc;
-//	}
-// }
-
+} 

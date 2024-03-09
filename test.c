@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "libft/libft.h"
 #include <fcntl.h>
-#include "fdf.h"
+// #include "fdf.h"
 
 int main(int ac, char **av)
 {
@@ -35,6 +35,7 @@ int main(int ac, char **av)
 	//	printf("Little endian\n");
 	//else
 	//	printf("Big endian\n");
-	int n = ft_atoi_base(av[1], av[2]);
-	printf("%d\n", n);
+	// int n = ft_atoi_base(av[1], av[2]);
+	// printf("%d\n", n);
+	printf("%f\n", 54.74 * (3.1415 / 180));
 }

@@ -26,12 +26,10 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 void	project(t_mlx *mlx, float ***point_array)
 {
 	/*										best projections															*/
-	apply_transformation(point_array, return_matrix('z', 0.17 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('x', -0.043 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('y', -0.2 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	
-	//apply_transformation(point_array, return_matrix('y', -0.12 * 3.1415), mlx->map->height, mlx->map->width);
-	//apply_transformation(point_array, return_matrix('x', -0.05 * 3.1415), mlx->map->height, mlx->map->width);
+	// apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	// apply_transformation(point_array, return_matrix('x', -54.7 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 }
 
 int	get_z_max(t_mlx *mlx)
@@ -54,21 +52,40 @@ int	get_z_max(t_mlx *mlx)
 	return (max);
 }
 
+int	get_z_min(t_map *map)
+{
+	int	z_min;
+	int	i;
+	int	j;
+
+	z_min = INT_MAX;
+	i = -1;
+	while (++i < map->height)
+	{
+		j = -1;
+		while (++j < map->width)
+		{
+			if (map->z_coord[i][j][0] < z_min)
+				z_min = map->z_coord[i][j][0];
+		}
+	}
+	return (z_min);
+}
+
 void	get_default_position(t_mlx *mlx, float ***points, int scale)
 {
 	float	height;
 	float	width;
+	int		z_max;
 	int		i;
 	int		j;
 
+	z_max = get_z_max(mlx);
 	i = -1;
 	j = -1;
-	ft_printf("Map height: %d\n", mlx->map->height);
-	ft_printf("Map width: %d\n", mlx->map->width);
-	height = (HEIGHT / 2);
-	width = (WIDTH / 2);
-	printf("height: %f\n", height);
-	printf("width: %f\n", width);
+	height = (HEIGHT / 3);
+	width = (WIDTH / 3);
+	(void)z_max;
 	while (++i < mlx->map->height)
 	{
 		j = -1;
@@ -90,7 +107,7 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	factor = 2.3;
+	factor = 1.7;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
 	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);
@@ -116,15 +133,15 @@ int main(int ac, char **av)
 	parse_map(av[1], mlx.map);
 	scale = get_default_scale(&mlx);
 	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
-	if (!APP)
-	{
-		for (int i = 0; i < HEIGHT; i++)
-		{
-			for (int j = 0; j < WIDTH; j++)
-				pixel_put(&mlx, i, j, 0x000000);
-		}
-		mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	}
+	// if (!APP)
+	// {
+	// 	for (int i = 0; i < HEIGHT; i++)
+	// 	{
+	// 		for (int j = 0; j < WIDTH; j++)
+	// 			pixel_put(&mlx, i, j, 0x000000);
+	// 	}
+	// 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
+	// }
 	// draw(&mlx);
 	
 	/* for mac */
