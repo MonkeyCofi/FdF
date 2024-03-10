@@ -90,7 +90,7 @@ float	**matrix_z(float angle)
 				matrix[i][j] = 0;
 			else if (i == 0 && j == 1)
 				matrix[i][j] = sin(angle) * -1;
-			else if (i == 0 && j == 0)
+			else if (i == 1 && j == 0)
 				matrix[i][j] = sin(angle);
 			else
 				matrix[i][j] = cos(angle);

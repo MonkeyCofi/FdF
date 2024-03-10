@@ -134,5 +134,7 @@ int		gradient_color(int start, int end, float progress);
 
 t_point	return_point(float x, float y);
 /*	transform	*/
+void	move_to_origin(t_mlx *mlx);
+void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
 
 #endif

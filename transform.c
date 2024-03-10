@@ -23,38 +23,45 @@ int     draw_image(t_mlx *mlx)
 }
 
 void	zoom(void *mlx, float scale, int code)
-{	
-	float	***new;
+{
 	t_mlx	*fdf;
-	int		test;
+	float	centers[3];
 
 	fdf = (t_mlx *)mlx;
-	// if (code == 4)
+	centers[0] = fdf->points[fdf->map->height / 2][fdf->map->width / 2][0];
+	centers[1] = fdf->points[fdf->map->height / 2][fdf->map->width / 2][1];
+	centers[2] = fdf->points[fdf->map->height / 2][fdf->map->width / 2][2];
 	if (code == 61)
 	{
-		test = scale + 1;
-		new = malloc(sizeof(float **) * fdf->map->height);
+		move_to_origin(fdf);
 		for (int i = 0; i < fdf->map->height; i++)
 		{
-			new[i] = malloc(sizeof(float *) * fdf->map->width);
 			for (int j = 0; j < fdf->map->width; j++)
 			{
-				new[i][j] = malloc(sizeof(float) * 3);
-				new[i][j][0] = fdf->points[i][j][0] * test;
-				new[i][j][1] = fdf->points[i][j][1] * test;
-				new[i][j][2] = fdf->points[i][j][2] * test;
-				// new[i][j][0] = fdf->points[i][j][0] ;
-				// new[i][j][1] = fdf->points[i][j][1] ;
-				// new[i][j][2] = fdf->points[i][j][2] ;
-				// fdf->points[i][j][0] *= scale;
-				// fdf->points[i][j][1] *= scale;
-				// fdf->points[i][j][2] *= scale;
+				fdf->points[i][j][0] *= 1.2;
+				fdf->points[i][j][1] *= 1.2;
+				fdf->points[i][j][2] *= 1.2;
 			}
 		}
-		fdf->points = new;
+		move_shape_back(fdf, centers[0], centers[2], centers[1]);
 		draw_image(fdf);
 	}
-	(void)mlx, (void)scale, (void)code, (void)new, (void)fdf;
+	else if (code == 45)
+	{
+		move_to_origin(fdf);
+		for (int i = 0; i < fdf->map->height; i++)
+		{
+			for (int j = 0; j < fdf->map->width; j++)
+			{
+				fdf->points[i][j][0] *= 0.9;
+				fdf->points[i][j][1] *= 0.9;
+				fdf->points[i][j][2] *= 0.9;
+			}
+		}
+		move_shape_back(fdf, centers[0], centers[2], centers[1]);
+		draw_image(fdf);
+	}
+	(void)scale;
 }
 
 //void	rotate_shape(t_mlx *mlx)

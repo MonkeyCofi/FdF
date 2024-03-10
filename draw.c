@@ -106,7 +106,7 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 	y = start.y;
  	while (dda.steps--)
  	{
-	 	pixel_put(mlx, x, y, color);
+	 	pixel_put(mlx, round(x), round(y), color);
 	 	x += dda.xinc;
 	 	y += dda.yinc;
 	}

@@ -27,9 +27,9 @@ void	project(t_mlx *mlx, float ***point_array)
 {
 	/*										best projections															*/
 	// apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	// apply_transformation(point_array, return_matrix('x', -54.7 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	// apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	(void)mlx;
+	(void)point_array;
 }
 
 int	get_z_max(t_mlx *mlx)
