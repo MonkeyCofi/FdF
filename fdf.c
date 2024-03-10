@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 00:47:33 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:33:41 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,6 @@ int	get_z_min(t_map *map)
 	return (z_min);
 }
 
-void	get_default_position(t_mlx *mlx, float ***points, int scale)
-{
-	float	height;
-	float	width;
-	int		z_max;
-	int		i;
-	int		j;
-
-	z_max = get_z_max(mlx);
-	i = -1;
-	j = -1;
-	height = (HEIGHT / mlx->camera->y_offset);
-	width = (WIDTH / mlx->camera->x_offset);
-	while (++i < mlx->map->height)
-	{
-		j = -1;
-		while (++j < mlx->map->width)
-		{
-			points[i][j][0] += width;
-			points[i][j][2] += height;
-		}
-	}
-	(void)scale;
-}
-
 //void	get_default_position(t_mlx *mlx, float ***points, int scale)
 //{
 //	float	height;
@@ -108,8 +83,8 @@ void	get_default_position(t_mlx *mlx, float ***points, int scale)
 //	z_max = get_z_max(mlx);
 //	i = -1;
 //	j = -1;
-//	height = (HEIGHT / 1.3);
-//	width = (WIDTH / z_max);
+//	height = (HEIGHT / mlx->camera->y_offset);
+//	width = (WIDTH / mlx->camera->x_offset);
 //	while (++i < mlx->map->height)
 //	{
 //		j = -1;
@@ -122,6 +97,31 @@ void	get_default_position(t_mlx *mlx, float ***points, int scale)
 //	(void)scale;
 //}
 
+void	get_default_position(t_mlx *mlx, float ***points, int scale)
+{
+	float	height;
+	float	width;
+	int		z_max;
+	int		i;
+	int		j;
+
+	z_max = get_z_max(mlx);
+	i = -1;
+	j = -1;
+	height = (HEIGHT / 2);
+	width = (WIDTH / 2);
+	while (++i < mlx->map->height)
+	{
+		j = -1;
+		while (++j < mlx->map->width)
+		{
+			points[i][j][0] += width;
+			points[i][j][2] += height;
+		}
+	}
+	(void)scale;
+}
+
 float	get_default_scale(t_mlx *mlx)
 {
 	float	scale_height;
@@ -129,7 +129,7 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	factor = 1.7;
+	factor = 1.9;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
 	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);

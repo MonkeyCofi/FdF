@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 00:47:17 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 02:05:23 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ void	zoom(void *mlx, float scale, int code);
 int		get_mouse_function(int code, int scale, void *param);
 
 int		get_color(t_mlx *mlx, int i, int j);
-	float	get_current_percent(float start, float end, float current);
+float	get_current_percent(float start, float end, float current);
 int		gradient_color(int start, int end, float progress);
 
-t_point	return_point(float x, float y);
+t_point	return_point(t_mlx *mlx, float x, float y);
 /*	transform	*/
 void	move_to_origin(t_mlx *mlx);
 void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
@@ -159,6 +159,7 @@ void	valid_map(char *map);
 char	*standardize_color(char *color);
 void	error_and_free(t_map *map, t_mlx *mlx, char *error_message);
 void	free_double_str_line(char *line, char **double_str, char *error_message);
+void	check_map(char *filename);
 
 /*		Utils		*/
 int		return_minimum(int a, int b);

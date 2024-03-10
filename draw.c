@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 00:34:05 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 02:06:10 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ void	draw(t_mlx *mlx)
 		while (++j < mlx->map->width)
 		{
 			if (i < mlx->map->height - 1)
-				draw_line(mlx, return_point(mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx->points[i + 1][j][0], mlx->points[i + 1][j][2]), get_color(mlx, i, j));
+				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx, mlx->points[i + 1][j][0], mlx->points[i + 1][j][2]), get_color(mlx, i, j));
 			if (j < mlx->map->width - 1)
-				draw_line(mlx, return_point(mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx->points[i][j + 1][0], mlx->points[i][j + 1][2]), get_color(mlx, i, j));
+				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx, mlx->points[i][j + 1][0], mlx->points[i][j + 1][2]), get_color(mlx, i, j));
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
 }
 
-t_point	return_point(float x, float y)
+t_point	return_point(t_mlx *mlx, float x, float y)
 {
 	t_point	point;
 
 	point.x = (float)x;
 	point.y = (float)y;
+	(void)mlx;
 	return (point);
 }
 

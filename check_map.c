@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:18:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 00:27:19 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:32:21 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,29 @@ void	free_double_str_line(char *line, char **double_str, char *error_message)
 		free(line);
 	ft_putendl_fd(error_message, 2);
 	exit(EXIT_FAILURE);
+}
+
+void	check_map(char *filename)
+{
+	int		file;
+	int		i;
+	char	*line;
+
+	file = open(filename, O_RDONLY);
+	if (file == -1)
+		exit(EXIT_FAILURE);
+	line = get_next_line(file);
+	while (line)
+	{
+		i = -1;
+		while (line[++i])
+		{
+			if (line[i] == ' ')
+				if (line[i + 1] == '\0')
+					exit(EXIT_FAILURE);
+		}
+		free(line);
+		line = get_next_line(file);
+		
+	}
 }
