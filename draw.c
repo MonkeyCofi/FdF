@@ -6,19 +6,11 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/24 14:41:12 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:34:05 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
-
-int	absolute(int value)
-{
-	if (value < 0)
-		return (value * -1);
-	return (value);
-}
 
 float	get_frac(int x, int y, t_point start, t_point end)
 {
@@ -63,31 +55,6 @@ t_point	return_point(float x, float y)
 	return (point);
 }
 
- // void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color)
- // {
- // 	t_line	dda;
- // float	x;
- // float	y;
- //
- // 	dda.dx = xend - xstart;
- // 	dda.dy = yend - ystart;
- // 	if (absolute(dda.dx) > absolute(dda.dy))
- // 		dda.steps = absolute(dda.dx);
- // 	else
- // 		dda.steps = absolute(dda.dy);
- // 	dda.xinc = dda.dx / (float)dda.steps;
- // 	dda.yinc = dda.dy / (float)dda.steps;
- // x = xstart;
- // y = ystart;
- // 	while (dda.steps--)
- // 	{
- // 	pixel_put(mlx, x, y, color);
- // 	x += dda.xinc;
- // 	y += dda.yinc;
- // }
- // }
-
-
 void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 {
 	t_line	dda;
@@ -106,7 +73,7 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 	y = start.y;
  	while (dda.steps--)
  	{
-	 	pixel_put(mlx, round(x), round(y), color);
+	 	pixel_put(mlx, x, y, color);
 	 	x += dda.xinc;
 	 	y += dda.yinc;
 	}

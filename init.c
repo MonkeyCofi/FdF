@@ -6,11 +6,24 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/25 20:04:24 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:48:03 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	init_camera(t_mlx *mlx)
+{
+	t_cam	*camera;
+
+	camera = malloc(sizeof(t_cam));
+	if (!camera)
+		exit(EXIT_FAILURE);
+	camera->x_offset = mlx->map->width * 1.1;
+	camera->y_offset = mlx->map->height * 1.4;
+	camera->zoom = 1.2;
+	mlx->camera = camera;
+}
 
 void	init_mlx(t_mlx *mlx)
 {
@@ -25,36 +38,8 @@ void	init_mlx(t_mlx *mlx)
 		exit(EXIT_FAILURE);
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
 	mlx->points = NULL;
+	mlx->camera = NULL;
 }
-
-//t_mlx	*init_mlx()
-//{
-//	t_mlx		*mlx;
-
-//	mlx = malloc(sizeof(t_mlx));
-//	if (!mlx)
-//		return (NULL);
-//	mlx->mlx = mlx_init();
-//	if (!mlx->mlx)
-//	{
-//		free (mlx);
-//		return (NULL);
-//	}
-//	mlx->mlx_window = mlx_new_window(&mlx->mlx, WIDTH, HEIGHT, "FdF");
-//	if (!mlx->mlx_window)
-//	{
-//		free(mlx);
-//		return (NULL);
-//	}
-//	mlx->img.img = mlx_new_image(&mlx->mlx, WIDTH, HEIGHT);
-//	if (!mlx->img.img)
-//	{
-//		free(mlx);
-//		return (NULL);
-//	}
-//	mlx->img.addr = mlx_get_data_addr(&mlx->img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
-//	return (mlx);
-//}
 
 void	init_map(t_mlx *mlx)
 {
@@ -65,6 +50,7 @@ void	init_map(t_mlx *mlx)
 	mlx->map->width = 0;
 	mlx->map->z_coord = NULL;
 }
+
 
 float	***return_array(t_mlx *mlx, int height, int width, int scale)
 {

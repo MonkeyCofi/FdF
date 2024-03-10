@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/27 17:51:53 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:24:58 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,15 @@ void	get_coords(char *line, int width, int **z)
 		j = 0;
 		z[i] = malloc(sizeof(int) * 2);
 		if (!z[i])
-			exit(EXIT_FAILURE);
+			free_double_str_line(line, coords, "Could not malloc for number array");
 		z[i][0] = ft_atoi(coords[i]);
 		while (coords[i][j] != ',' && coords[i][j])
 			j++;
 		if (coords[i][j] == ',')
+		{
+			coords[i] = standardize_color(&coords[i][j]);
 			z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
+		}
 		else
 			z[i][1] = -1;
 		free(coords[i]);
@@ -98,10 +101,8 @@ void	parse_map(char *file, t_map *map)
 	line = get_next_line(op_file);
 	if (!line)
 	{
-		ft_putendl_fd("Map is empty", 2);
-		free(map);
 		close(op_file);
-		exit(EXIT_FAILURE);
+		error_and_free(map, NULL, "Map is empty");
 	}
 	map->height = get_height(file);
 	map->width = get_width(file);

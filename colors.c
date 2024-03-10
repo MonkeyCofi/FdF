@@ -1,10 +1,8 @@
 #include "fdf.h"
 
-int     get_color(t_mlx *mlx, int i, int j)
+int	get_t(int color)
 {
-	if (mlx->map->z_coord[i][j][1] != -1)
-		return (mlx->map->z_coord[i][j][1]);
-	return (0xFFFFFF);
+	return ((color >> 24) & 0xFF);
 }
 
 int	get_red(int color)
@@ -22,6 +20,17 @@ int get_blue(int color)
 	return ((color) & 0xFF);
 }
 
+int     get_color(t_mlx *mlx, int i, int j)
+{
+	int	color;
+
+	if (mlx->map->z_coord[i][j][1] != -1)
+	{
+		color = mlx->map->z_coord[i][j][1];
+		return (get_t(color) << 24 | get_red(color) << 16 | get_green(color) << 8 | get_blue(color));
+	}
+	return (0x00FFFFFF);
+}
 float	get_current_percent(float start, float end, float current)
 {
 	if (start != end)

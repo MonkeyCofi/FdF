@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/02/25 19:15:38 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/10 20:14:08 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	reset(t_mlx *mlx, int scale)
 	temp = mlx->points;
 	mlx->points = re_array;
 	(void)temp;
-	// apply_transformation(mlx->points, return_matrix('z', 0.17 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	// apply_transformation(mlx->points, return_matrix('x', -0.043 * 3.14159265358979323), mlx->map->height, mlx->map->width);
-	// apply_transformation(mlx->points, return_matrix('y', -0.2 * 3.14159265358979323), mlx->map->height, mlx->map->width);
 	draw_image(mlx);
 	(void)re_array;
 }
@@ -33,11 +30,11 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 {
 	if (keycode == 53 || keycode == 65307)
 		escape(mlx);
-	else if (keycode == 119 || keycode == 97 || keycode == 115 || keycode == 100 || keycode == 113 || keycode == 101)
+	else if (keycode == Q || keycode == W || keycode == E || keycode == A || keycode == S || keycode == D)
 		rotate_shape(mlx, keycode);
-	else if (keycode == 114)
+	else if (keycode == R)
 		reset(mlx, scale);	
-	else if (keycode == 45 || keycode == 61)
+	else if (keycode == PLUS || keycode == MINUS)
 		zoom((t_mlx *)mlx, scale, keycode);
 	else
 		translate(mlx, keycode);
@@ -99,40 +96,40 @@ void	rotate_shape(t_mlx *mlx, int keycode)
 	y1 = round(mlx->points[mlx->map->height / 2][mlx->map->width / 2][2]);
 	z1 = round(mlx->points[mlx->map->height / 2][mlx->map->width / 2][2]);
 	angle = 0;
-	if (keycode == 119 || keycode == 1)
+	if (keycode == W)
 	{
 		move_to_origin(mlx);	
-		apply_transformation(mlx->points, return_matrix('x', (angle - 3) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('x', (angle - 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
-	else if (keycode == 115)
+	else if (keycode == S)
 	{
 		move_to_origin(mlx);	
-		apply_transformation(mlx->points, return_matrix('x', (angle + 3) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('x', (angle + 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
-	else if (keycode == 97)
+	else if (keycode == A)
 	{
 		move_to_origin(mlx);	
-		apply_transformation(mlx->points, return_matrix('y', (angle + 5) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('y', (angle + 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
-	else if (keycode == 100)
+	else if (keycode == D)
 	{
 		move_to_origin(mlx);	
-		apply_transformation(mlx->points, return_matrix('y', (angle - 5) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('y', (angle - 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
-	else if (keycode == 113)
+	else if (keycode == Q)
 	{
 		move_to_origin(mlx);
-		apply_transformation(mlx->points, return_matrix('z', (angle + 1) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('z', (angle + 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
-	else if (keycode == 101)
+	else if (keycode == E)
 	{
 		move_to_origin(mlx);
-		apply_transformation(mlx->points, return_matrix('z', (angle - 1) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+		apply_transformation(mlx->points, return_matrix('z', (angle - 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 		move_shape_back(mlx, x1, y1, z1);
 	}
 	draw_image(mlx);

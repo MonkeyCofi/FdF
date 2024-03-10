@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/07 16:38:53 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:47:17 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,37 @@
 //# define HEIGHT 320
 //# define WIDTH 640
 # ifdef __APPLE__
+#  define APP 1
 #  define HEIGHT 1080
 #  define WIDTH 1920
-#  define APP 1
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
+#  define Q 12
+#  define E 14
+#  define R 15
+#  define PLUS 24
+#  define MINUS 27
 # else
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define Q 113
+#  define E 101
 #  define HEIGHT 720
 #  define WIDTH 1080
 #  define APP 0
 # endif
+
+typedef enum	s_rots
+{
+	LEFT,
+	UP,
+	DOWN,
+	RIGHT
+}	t_rots;
 
 typedef struct	s_data
 {
@@ -44,9 +67,10 @@ typedef struct	s_data
 
 typedef struct	s_cam
 {
-	int	zoom;
-	int	x_offset;
-	int	y_offset;
+	float	zoom;
+	float	x_offset;
+	float	y_offset;
+	float	z_offset;
 }	t_cam;
 
 typedef struct	s_map
@@ -64,13 +88,6 @@ typedef struct	s_line
 	float	xinc;
 	float	yinc;
 }	t_line;
-
-/* typedef struct	s_point */
-/* { */
-/* 	int	x; */
-/* 	int	y; */
-/* 	int	z; */
-/* }	t_point; */
 
 typedef struct	s_point
 {
@@ -93,8 +110,8 @@ typedef struct	s_mlx
 //void	parse_map(t_map *map, char *file);
 void	parse_map(char *file, t_map *map);
 
-// init
-//t_mlx	*init_mlx();
+/*		init		*/
+void	init_camera(t_mlx *mlx);
 void	init_mlx(t_mlx *mlx);
 //void	init_map(t_mlx **mlx);
 void	init_map(t_mlx *mlx);
@@ -136,5 +153,15 @@ t_point	return_point(float x, float y);
 /*	transform	*/
 void	move_to_origin(t_mlx *mlx);
 void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
+
+/*		map check	*/
+void	valid_map(char *map);
+char	*standardize_color(char *color);
+void	error_and_free(t_map *map, t_mlx *mlx, char *error_message);
+void	free_double_str_line(char *line, char **double_str, char *error_message);
+
+/*		Utils		*/
+int		return_minimum(int a, int b);
+int		absolute(int value);
 
 #endif

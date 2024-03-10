@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/07 19:14:39 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:47:33 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 void	project(t_mlx *mlx, float ***point_array)
 {
 	/*										best projections															*/
-	// apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	// apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	 apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	 apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 	(void)mlx;
 	(void)point_array;
 }
@@ -83,22 +83,44 @@ void	get_default_position(t_mlx *mlx, float ***points, int scale)
 	z_max = get_z_max(mlx);
 	i = -1;
 	j = -1;
-	height = (HEIGHT / 3);
-	width = (WIDTH / 3);
-	(void)z_max;
+	height = (HEIGHT / mlx->camera->y_offset);
+	width = (WIDTH / mlx->camera->x_offset);
 	while (++i < mlx->map->height)
 	{
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			//points[i][j][0] += WIDTH / 2;
-			//points[i][j][2] += HEIGHT / 2;
 			points[i][j][0] += width;
 			points[i][j][2] += height;
 		}
 	}
 	(void)scale;
 }
+
+//void	get_default_position(t_mlx *mlx, float ***points, int scale)
+//{
+//	float	height;
+//	float	width;
+//	int		z_max;
+//	int		i;
+//	int		j;
+
+//	z_max = get_z_max(mlx);
+//	i = -1;
+//	j = -1;
+//	height = (HEIGHT / 1.3);
+//	width = (WIDTH / z_max);
+//	while (++i < mlx->map->height)
+//	{
+//		j = -1;
+//		while (++j < mlx->map->width)
+//		{
+//			points[i][j][0] += width;
+//			points[i][j][2] += height;
+//		}
+//	}
+//	(void)scale;
+//}
 
 float	get_default_scale(t_mlx *mlx)
 {
@@ -128,22 +150,13 @@ int main(int ac, char **av)
 		ft_printf("Usage: ./fdf [mapfile]\n");
 		exit(EXIT_FAILURE);
 	}
+	valid_map(av[1]);
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
+	init_camera(&mlx);
 	scale = get_default_scale(&mlx);
-	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, scale); // CORRECT COMPLETELY	
-	// if (!APP)
-	// {
-	// 	for (int i = 0; i < HEIGHT; i++)
-	// 	{
-	// 		for (int j = 0; j < WIDTH; j++)
-	// 			pixel_put(&mlx, i, j, 0x000000);
-	// 	}
-	// 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
-	// }
-	// draw(&mlx);
-	
+	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, scale);
 	/* for mac */
 	if (APP)
 		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
