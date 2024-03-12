@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:27:54 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:37:07 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ typedef struct	s_cam
 	float	x_offset;
 	float	y_offset;
 	float	z_offset;
+	float	x_angle;
+	float	y_angle;
+	float	z_angle;
 }	t_cam;
 
 typedef struct	s_map
@@ -144,8 +147,10 @@ int		get_mouse_function(int code, int scale, void *param);
 void	zoom(void *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
-int		gradient_color(int start, int end, float progress);
-t_point	return_point(t_mlx *mlx, float x, float y);
+//int		gradient_color(int start, int end, float progress);
+int		gradient_color(t_point start, t_point end, float progress);
+//t_point	return_point(t_mlx *mlx, float x, float y);
+t_point	return_point(t_mlx *mlx, float x, float y, int i, int j);
 
 /*	transform	*/
 void	move_to_origin(t_mlx *mlx);

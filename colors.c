@@ -46,14 +46,14 @@ float	get_current_percent(float start, float end, float current)
 	 return (distance_1 / distance_2);
 }
 
-int	gradient_color(int start, int end, float progress)
+int	gradient_color(t_point start, t_point end, float progress)
 {
 	int	r;
 	int	g;
 	int	b;
 
-	r = round(1 - progress) * get_red(start) + progress * get_red(end);
-	g = round(1 - progress) * get_green(start) + progress * get_green(end);
-	b = round(1 - progress) * get_blue(start) + progress * get_blue(end);
+	r = round(1 - progress) * get_red(start.color) + progress * get_red(end.color);
+	g = round(1 - progress) * get_green(start.color) + progress * get_green(end.color);
+	b = round(1 - progress) * get_blue(start.color) + progress * get_blue(end.color);
 	return (r << 16 | g << 8 | b);
 }

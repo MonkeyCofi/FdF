@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:19:52 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:46:50 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	init_camera(t_mlx *mlx)
 	camera = malloc(sizeof(t_cam));
 	if (!camera)
 		exit(EXIT_FAILURE);
+	camera->x_angle = -62 * (3.1415 / 180);
+	camera->y_angle = 45 * (3.1415 / 180);
+	apply_transformation(mlx->points, return_matrix('y', camera->y_angle), mlx->map->height, mlx->map->width);
+	apply_transformation(mlx->points, return_matrix('x', camera->x_angle), mlx->map->height, mlx->map->width);
 	camera->x_offset = (WIDTH / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
 	camera->y_offset = (HEIGHT / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 	camera->zoom = get_default_scale(mlx);

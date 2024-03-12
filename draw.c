@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:24:32 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:36:48 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,42 @@ void	draw(t_mlx *mlx)
 		while (++j < mlx->map->width)
 		{
 			if (i < mlx->map->height - 1)
-				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx, mlx->points[i + 1][j][0], mlx->points[i + 1][j][2]), get_color(mlx, i, j));
+				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2], i, j), \
+					return_point(mlx, mlx->points[i + 1][j][0], mlx->points[i + 1][j][2], i + 1, j), get_color(mlx, i, j));
 			if (j < mlx->map->width - 1)
-				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2]), return_point(mlx, mlx->points[i][j + 1][0], mlx->points[i][j + 1][2]), get_color(mlx, i, j));
+				draw_line(mlx, return_point(mlx, mlx->points[i][j][0], mlx->points[i][j][2], i, j), \
+					return_point(mlx, mlx->points[i][j + 1][0], mlx->points[i][j + 1][2], i, j + 1), get_color(mlx, i, j));
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_window, mlx->img.img, 0, 0);
 }
 
-t_point	return_point(t_mlx *mlx, float x, float y)
+t_point	return_point(t_mlx *mlx, float x, float y, int i, int j)
 {
 	t_point	point;
 
 	point.x = x;
 	point.y = y;
-	(void)mlx;
+	point.color = mlx->map->z_coord[i][j][1];
 	return (point);
+}
+
+int	colorr(t_mlx *mlx, t_point start, t_point end, t_point current)
+{
+	float	perc;
+	
+	if (current.x > current.y)
+		perc = get_current_percent(start.x, end.x, current.x);
+	else
+		perc = get_current_percent(start.y, end.y, current.y);
+	(void)mlx;
+	return (gradient_color(start, end, perc));
 }
 
 void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 {
 	t_line	dda;
+	t_point	current;
 	float	x;
 	float	y;
 
@@ -72,10 +87,13 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
  	dda.yinc = dda.dy / (float)dda.steps;
 	x = start.x;
 	y = start.y;
+	current.x = x;
+	current.y = y;
  	while (dda.steps--)
  	{
-	 	pixel_put(mlx, x, y, color);
-	 	x += dda.xinc;
-	 	y += dda.yinc;
+	 	pixel_put(mlx, x, y, colorr(mlx, start, end, current));
+	 	current.x += dda.xinc;
+	 	current.y += dda.yinc;
 	}
-} 
+	(void)color;
+}

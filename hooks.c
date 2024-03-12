@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 15:13:38 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:55:06 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 // reset the shape to standard projection
 void	reset(t_mlx *mlx, int scale)
 {
-	get_default_position(mlx, mlx->points, scale);
+	if (mlx->points)
+		free(mlx->points);
+	mlx->points = return_array(mlx, mlx->map->height, mlx->map->width, mlx->camera->zoom);
+	if (mlx->camera)
+		free(mlx->camera);
+	init_camera(mlx);
 	draw_image(mlx);
 	(void)scale;
 }

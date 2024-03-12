@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:32:49 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:38:13 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 	}
 }
 
-void	iso(t_mlx *mlx, float ***point_array)
-{
-	/*										best projections															*/	
-	 apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	 apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-}
+//void	iso(t_mlx *mlx, float ***point_array)
+//{
+//	/*										best projections															*/
+//	 apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+//	 apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+//}
 
 void	parallel(t_mlx *mlx)
 {
@@ -98,7 +98,6 @@ int main(int ac, char **av)
 		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
 	else
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
-	iso(&mlx, mlx.points);
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
 	draw(&mlx);
