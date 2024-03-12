@@ -27,7 +27,7 @@ void	reset(t_mlx *mlx, int scale)
 
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 {
-	if (keycode == 53 || keycode == 65307)
+	if (keycode == ESC)
 		escape(mlx);
 	else if (keycode == Q || keycode == W || keycode == E || keycode == A || keycode == S || keycode == D)
 		rotate_shape(mlx, keycode);

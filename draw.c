@@ -54,7 +54,7 @@ t_point	return_point(t_mlx *mlx, float x, float y, int i, int j)
 
 	point.x = x;
 	point.y = y;
-	point.color = mlx->map->z_coord[i][j][1];
+	point.color = get_color(mlx, i, j); 
 	return (point);
 }
 
@@ -91,7 +91,8 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 	current.y = y;
  	while (dda.steps--)
  	{
-	 	pixel_put(mlx, x, y, colorr(mlx, start, end, current));
+	 	pixel_put(mlx, current.x, current.y, colorr(mlx, start, end, current));
+	 	// pixel_put(mlx, current.x, current.y, color);
 	 	current.x += dda.xinc;
 	 	current.y += dda.yinc;
 	}

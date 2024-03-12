@@ -40,16 +40,21 @@
 #  define MINUS 27
 #  define ESC 53
 # else
+#  define HEIGHT 720
+#  define WIDTH 1080
 #  define W 119
 #  define A 97
 #  define S 115
 #  define D 100
 #  define Q 113
 #  define E 101
-#  define HEIGHT 720
-#  define WIDTH 1080
-#  define PLUS 
-#  define MINUS 
+#  define R 114
+#  define UP 65362
+#  define LEFT 65361
+#  define DOWN 65364
+#  define RIGHT 65363
+#  define PLUS 61
+#  define MINUS 45
 #  define APP 0
 #  define ESC 65307
 # endif
