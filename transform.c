@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:41:08 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 00:39:04 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:57:50 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ void	zoom(void *mlx, float scale, int code)
 	{
 		move_to_origin(fdf);
 		mult_by_scale(fdf, 1.1);
-		//for (int i = 0; i < fdf->map->height; i++)
-		//{
-		//	for (int j = 0; j < fdf->map->width; j++)
-		//	{
-		//		fdf->points[i][j][0] *= 1.1;
-		//		fdf->points[i][j][1] *= 1.1;
-		//		fdf->points[i][j][2] *= 1.1;
-		//	}
-		//}
 		move_shape_back(fdf, centers[0], centers[2], centers[1]);
 		draw_image(fdf);
 	}
@@ -69,17 +60,15 @@ void	zoom(void *mlx, float scale, int code)
 	{
 		move_to_origin(fdf);
 		mult_by_scale(fdf, 0.9);
-		//for (int i = 0; i < fdf->map->height; i++)
-		//{
-		//	for (int j = 0; j < fdf->map->width; j++)
-		//	{
-		//		fdf->points[i][j][0] *= 0.9;
-		//		fdf->points[i][j][1] *= 0.9;
-		//		fdf->points[i][j][2] *= 0.9;
-		//	}
-		//}
 		move_shape_back(fdf, centers[0], centers[2], centers[1]);
 		draw_image(fdf);
 	}
 	(void)scale;
+}
+
+void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis)
+{
+	move_to_origin(mlx);
+	apply_transformation(mlx->points, return_matrix(axis, ((*angle) - 4) * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	move_shape_back(mlx, axes[0], axes[1], axes[2]);
 }

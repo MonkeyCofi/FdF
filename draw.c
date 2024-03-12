@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 02:06:10 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:24:32 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_point	return_point(t_mlx *mlx, float x, float y)
 {
 	t_point	point;
 
-	point.x = (float)x;
-	point.y = (float)y;
+	point.x = x;
+	point.y = y;
 	(void)mlx;
 	return (point);
 }

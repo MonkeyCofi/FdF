@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 02:05:23 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:27:54 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+# include <math.h>
 
 // temp includes
 # include <stdio.h>
-# include <math.h>
 
-//# define HEIGHT 320
-//# define WIDTH 640
 # ifdef __APPLE__
 #  define APP 1
 #  define HEIGHT 1080
@@ -34,8 +32,13 @@
 #  define Q 12
 #  define E 14
 #  define R 15
+#  define UP 126
+#  define LEFT 123
+#  define DOWN 125
+#  define RIGHT 124
 #  define PLUS 24
 #  define MINUS 27
+#  define ESC 53
 # else
 #  define W 119
 #  define A 97
@@ -45,16 +48,11 @@
 #  define E 101
 #  define HEIGHT 720
 #  define WIDTH 1080
+#  define PLUS 
+#  define MINUS 
 #  define APP 0
+#  define ESC 65307
 # endif
-
-typedef enum	s_rots
-{
-	LEFT,
-	UP,
-	DOWN,
-	RIGHT
-}	t_rots;
 
 typedef struct	s_data
 {
@@ -141,18 +139,18 @@ int     get_color(t_mlx *mlx, int i, int j);
 int     draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
-
-void	zoom(void *mlx, float scale, int code);
 int		get_mouse_function(int code, int scale, void *param);
 
+void	zoom(void *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
 int		gradient_color(int start, int end, float progress);
-
 t_point	return_point(t_mlx *mlx, float x, float y);
+
 /*	transform	*/
 void	move_to_origin(t_mlx *mlx);
 void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
+void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis);
 
 /*		map check	*/
 void	valid_map(char *map);
@@ -163,6 +161,11 @@ void	check_map(char *filename);
 
 /*		Utils		*/
 int		return_minimum(int a, int b);
+float	get_default_scale(t_mlx *mlx);
 int		absolute(int value);
+int		print_instructions(t_mlx *mlx);
+void	get_default_position(t_mlx *mlx, float ***points);
+int		get_z_max(t_mlx *mlx);
+int		get_z_min(t_map *map);
 
 #endif

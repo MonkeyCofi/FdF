@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 01:00:12 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:19:52 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ void	init_camera(t_mlx *mlx)
 	camera = malloc(sizeof(t_cam));
 	if (!camera)
 		exit(EXIT_FAILURE);
-	/* place center of shape in the center of the screen */
-	camera->x_offset = mlx->map->width / 2;
-	camera->y_offset = mlx->map->height / 2;
-	/* zoom according to the largest value among height, width and z values */
-	camera->zoom = 0.8;
+	camera->x_offset = (WIDTH / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
+	camera->y_offset = (HEIGHT / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
+	camera->zoom = get_default_scale(mlx);
 	mlx->camera = camera;
 }
 
