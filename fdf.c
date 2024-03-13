@@ -102,7 +102,7 @@ int main(int ac, char **av)
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
 	draw(&mlx);
-	// sphereize(&mlx);
+	mlx_loop_hook(mlx.mlx, disco_ball, &mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }

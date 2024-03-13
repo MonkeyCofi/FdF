@@ -43,6 +43,7 @@ void	init_mlx(t_mlx *mlx)
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
 	mlx->points = NULL;
 	mlx->camera = NULL;
+	mlx->bon = 0;
 }
 
 void	init_map(t_mlx *mlx)

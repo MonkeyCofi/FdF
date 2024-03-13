@@ -115,6 +115,7 @@ typedef struct	s_mlx
 {
 	void	*mlx;
 	void	*mlx_window;
+	int		bon;
 	float	***points;
 	t_data	img;
 	t_map	*map;
@@ -187,5 +188,6 @@ int		get_z_max(t_mlx *mlx);
 int		get_z_min(t_map *map);
 
 void	sphereize(t_mlx *mlx);
+int	disco_ball(t_mlx *mlx);
 
 #endif
