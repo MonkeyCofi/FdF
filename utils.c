@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 00:28:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:27:26 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:41:08 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int		absolute(int value)
 
 int	print_instructions(t_mlx *mlx)
 {
-	mlx_string_put(mlx->mlx, mlx->mlx_window, WIDTH, HEIGHT, 0x00FFFFFF, "Arrow keys: Translate shape");
-	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 50, 0x00FFFFFF, "Q & E: Rotate z");
-	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 70, 0x00FFFFFF, "A & D: Rotate y");
-	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 90, 0x00FFFFFF, "W & S: Rotate x");
+	mlx_string_put(mlx->mlx, mlx->mlx_window, (WIDTH / 2) - 950, HEIGHT - 1050, 0x000099EF, "Arrow keys: Translate shape");
+	mlx_string_put(mlx->mlx, mlx->mlx_window, (WIDTH / 2) - 950, HEIGHT - 1000, 0x000099EF, "Q & E: Rotate z");
+	mlx_string_put(mlx->mlx, mlx->mlx_window, (WIDTH / 2) - 950, HEIGHT - 950, 0x000099EF, "A & D: Rotate y");
+	mlx_string_put(mlx->mlx, mlx->mlx_window, (WIDTH / 2) - 950, HEIGHT - 900, 0x000099EF, "W & S: Rotate x");
 	return (0);
 }
 
@@ -53,32 +53,6 @@ void	get_default_position(t_mlx *mlx, float ***points)
 	}
 	
 }
-//void	get_default_position(t_mlx *mlx, float ***points, int scale)
-//{
-//	float	height;
-//	float	width;
-//	int		z_max;
-//	int		i;
-//	int		j;
-
-//	z_max = get_z_max(mlx);
-//	i = -1;
-//	j = -1;
-//	//height = return_minimum(z_max, mlx->map->height);
-//	//width = (WIDTH / 2);
-//	height = HEIGHT / (mlx->map->height + (z_max / 2));
-//	width = WIDTH / (mlx->map->width / 2);
-//	while (++i < mlx->map->height)
-//	{
-//		j = -1;
-//		while (++j < mlx->map->width)
-//		{
-//			points[i][j][0] += width;
-//			points[i][j][2] += height * z_max;
-//		}
-//	}
-//	(void)scale;
-//}
 
 int	get_z_max(t_mlx *mlx)
 {

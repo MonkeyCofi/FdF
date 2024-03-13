@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:55:06 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:34:01 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,42 +91,20 @@ void	rotate_shape(t_mlx *mlx, int keycode)
 	axes[0] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
 	axes[1] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 	axes[2] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][1];
+	move_to_origin(mlx);
 	if (keycode == W)
-	{
-		move_to_origin(mlx);
 		apply_transformation(mlx->points, return_matrix('x', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
 	else if (keycode == S)
-	{
-		move_to_origin(mlx);	
 		apply_transformation(mlx->points, return_matrix('x', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
 	else if (keycode == A)
-	{
-		move_to_origin(mlx);	
 		apply_transformation(mlx->points, return_matrix('y', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
 	else if (keycode == D)
-	{
-		move_to_origin(mlx);	
 		apply_transformation(mlx->points, return_matrix('y', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
 	else if (keycode == Q)
-	{
-		move_to_origin(mlx);
 		apply_transformation(mlx->points, return_matrix('z', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
 	else if (keycode == E)
-	{
-		move_to_origin(mlx);
 		apply_transformation(mlx->points, return_matrix('z', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-		move_shape_back(mlx, axes[0], axes[1], axes[2]);
-	}
+	move_shape_back(mlx, axes[0], axes[1], axes[2]);
 	draw_image(mlx);
 }
 
@@ -141,28 +119,27 @@ void	move_points(t_mlx *mlx, int position)
 		j = -1;
 		while (++j < mlx->map->width)
 		{
-			if (position == 0)
+			if (position == Up)
 				mlx->points[i][j][2] -= 15;
-			else if (position == 1)
+			else if (position == Down)
 				mlx->points[i][j][2] += 15;
-			else if (position == 2)
+			else if (position == Right)
 				mlx->points[i][j][0] += 15;
-			else if (position == 3)
+			else if (position == Left)
 				mlx->points[i][j][0] -= 15;
 		}
 	}
 }
 
-// currently only for linux
 int	translate(t_mlx *mlx, int keycode)
 {
-	if (keycode == 65362 || keycode == UP)
+	if (keycode == UP)
 		move_points(mlx, 0);
-	else if (keycode == 65364 || keycode == DOWN)
+	else if (keycode == DOWN)
 		move_points(mlx, 1);
-	else if (keycode == 65363 || keycode == RIGHT)
+	else if (keycode == RIGHT)
 		move_points(mlx, 2);
-	else if (keycode == 65361 || keycode == LEFT)
+	else if (keycode == LEFT)
 		move_points(mlx, 3);
 	draw_image(mlx);
 	return (0);

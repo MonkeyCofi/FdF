@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 20:37:07 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:26:54 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@
 #  define APP 0
 #  define ESC 65307
 # endif
+
+typedef enum	s_dir
+{
+	Up,
+	Down,
+	Right,
+	Left
+}	t_dir;
 
 typedef struct	s_data
 {
