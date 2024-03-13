@@ -93,6 +93,7 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	init_map(&mlx);
 	parse_map(av[1], mlx.map);
+	mlx_loop_hook(mlx.mlx, print_instructions, &mlx);
 	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, get_default_scale(&mlx));
 	if (APP)
 		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
@@ -101,6 +102,7 @@ int main(int ac, char **av)
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
 	draw(&mlx);
+	// sphereize(&mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }

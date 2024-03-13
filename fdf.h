@@ -178,4 +178,6 @@ void	get_default_position(t_mlx *mlx, float ***points);
 int		get_z_max(t_mlx *mlx);
 int		get_z_min(t_map *map);
 
+void	sphereize(t_mlx *mlx);
+
 #endif

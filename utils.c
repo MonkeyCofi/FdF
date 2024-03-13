@@ -28,7 +28,7 @@ int		absolute(int value)
 
 int	print_instructions(t_mlx *mlx)
 {
-	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 30, 0x00FFFFFF, "Arrow keys: Translate shape");
+	mlx_string_put(mlx->mlx, mlx->mlx_window, WIDTH, HEIGHT, 0x00FFFFFF, "Arrow keys: Translate shape");
 	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 50, 0x00FFFFFF, "Q & E: Rotate z");
 	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 70, 0x00FFFFFF, "A & D: Rotate y");
 	mlx_string_put(mlx->mlx, mlx->mlx_window, 30, 90, 0x00FFFFFF, "W & S: Rotate x");

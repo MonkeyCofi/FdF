@@ -21,6 +21,7 @@ void	reset(t_mlx *mlx, int scale)
 	if (mlx->camera)
 		free(mlx->camera);
 	init_camera(mlx);
+	get_default_position(mlx, mlx->points);
 	draw_image(mlx);
 	(void)scale;
 }
