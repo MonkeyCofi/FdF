@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 20:36:48 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:15:42 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,20 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 {
 	t_line	dda;
 	t_point	current;
-	float	x;
-	float	y;
 
- 	dda.dx = end.x - start.x;
- 	dda.dy = end.y - start.y;
+ 	dda.dx = round(end.x) - round(start.x);
+ 	dda.dy = round(end.y) - round(start.y);
  	if (absolute(dda.dx) > absolute(dda.dy))
 		dda.steps = absolute(dda.dx);
  	else
  		dda.steps = absolute(dda.dy);
  	dda.xinc = dda.dx / (float)dda.steps;
  	dda.yinc = dda.dy / (float)dda.steps;
-	x = start.x;
-	y = start.y;
-	current.x = x;
-	current.y = y;
+	current.x = start.x;
+	current.y = start.y;
  	while (dda.steps--)
  	{
 	 	pixel_put(mlx, current.x, current.y, colorr(mlx, start, end, current));
-	 	// pixel_put(mlx, current.x, current.y, color);
 	 	current.x += dda.xinc;
 	 	current.y += dda.yinc;
 	}
