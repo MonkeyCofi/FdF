@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:38:13 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:10:03 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,6 @@ void	parallel(t_mlx *mlx)
 	 apply_transformation(mlx->points, return_matrix('y', 300 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 	 apply_transformation(mlx->points, return_matrix('x', -30 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 }
-
-//void	get_default_position(t_mlx *mlx, float ***points, int scale)
-//{
-//	float	height;
-//	float	width;
-//	int		z_max;
-//	int		i;
-//	int		j;
-
-//	z_max = get_z_max(mlx);
-//	i = -1;
-//	j = -1;
-//	height = (HEIGHT / mlx->camera->y_offset);
-//	width = (WIDTH / mlx->camera->x_offset);
-//	while (++i < mlx->map->height)
-//	{
-//		j = -1;
-//		while (++j < mlx->map->width)
-//		{
-//			points[i][j][0] += width;
-//			points[i][j][2] += height;
-//		}
-//	}
-//	(void)scale;
-//}
 
 float	get_default_scale(t_mlx *mlx)
 {
@@ -91,9 +66,8 @@ int main(int ac, char **av)
 	}
 	valid_map(av[1]);
 	init_mlx(&mlx);
-	init_map(&mlx);
 	parse_map(av[1], mlx.map);
-	mlx_loop_hook(mlx.mlx, print_instructions, &mlx);
+	get_default_color(&mlx);
 	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, get_default_scale(&mlx));
 	if (APP)
 		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
@@ -101,8 +75,8 @@ int main(int ac, char **av)
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
-	draw(&mlx);
 	mlx_loop_hook(mlx.mlx, disco_ball, &mlx);
+	draw(&mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);
 }

@@ -5,6 +5,13 @@
 		"_types.h": "c",
 		"fdf.h": "c",
 		"ios": "c",
-		"iterator": "c"
+		"iterator": "c",
+		"__hash_table": "c",
+		"algorithm": "c",
+		"bitset": "c",
+		"locale": "c",
+		"memory": "c",
+		"optional": "c",
+		"ostream": "c"
 	}
 }

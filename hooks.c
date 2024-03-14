@@ -6,14 +6,13 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/13 10:34:01 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:04:07 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// reset the shape to standard projection
-void	reset(t_mlx *mlx, int scale)
+void	reset(t_mlx *mlx)
 {
 	if (mlx->points)
 		free(mlx->points);
@@ -23,7 +22,6 @@ void	reset(t_mlx *mlx, int scale)
 	init_camera(mlx);
 	get_default_position(mlx, mlx->points);
 	draw_image(mlx);
-	(void)scale;
 }
 
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
@@ -33,11 +31,19 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 	else if (keycode == Q || keycode == W || keycode == E || keycode == A || keycode == S || keycode == D)
 		rotate_shape(mlx, keycode);
 	else if (keycode == R)
-		reset(mlx, scale);	
+		reset(mlx);	
 	else if (keycode == PLUS || keycode == MINUS)
 		zoom((t_mlx *)mlx, scale, keycode);
-	else if (keycode == 116)
+	else if (keycode == B || keycode == P || keycode == G || keycode == Y)
 	{
+		if (keycode == P)
+			mlx->current_color = 255 << 16 | 255;
+		else if (keycode == Y)
+			mlx->current_color = 255 << 16 | 255 << 8;
+		else if (keycode == B)
+			mlx->current_color = 255 << 8 | 255;			//blue
+		else if (keycode == G)
+			mlx->current_color = 255 << 8;
 		if (mlx->bon)
 			mlx->bon = 0;
 		else
@@ -45,7 +51,7 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 	}
 	else
 		translate(mlx, keycode);
-	ft_printf("Key pressed: %d\n", keycode);
+	ft_printf("Keycode: %d\n", keycode);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 19:46:50 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:00:37 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,14 @@ void	init_mlx(t_mlx *mlx)
 	mlx->points = NULL;
 	mlx->camera = NULL;
 	mlx->bon = 0;
-}
-
-void	init_map(t_mlx *mlx)
-{
 	mlx->map = malloc(sizeof(t_map));
 	if (!mlx->map)
-		return ;
+		exit(EXIT_FAILURE);
 	mlx->map->height = 0;
 	mlx->map->width = 0;
 	mlx->map->z_coord = NULL;
+	mlx->current_color = 0;
 }
-
 
 float	***return_array(t_mlx *mlx, int height, int width, int scale)
 {
@@ -78,4 +74,25 @@ float	***return_array(t_mlx *mlx, int height, int width, int scale)
 		}
 	}
 	return (point_arr);
+}
+
+void	get_default_color(t_mlx *mlx)
+{
+	int	i;
+	int	j;
+	int	***def;
+
+	i = -1;
+	def = malloc(sizeof(int **) * mlx->map->height);
+	while (++i < mlx->map->height)
+	{
+		def[i] = malloc(sizeof(int *) * mlx->map->width);
+		j = -1;
+		while (++j < mlx->map->width)
+		{
+			def[i][j] = malloc(sizeof(int));
+			def[i][j][0] = mlx->map->z_coord[i][j][1];
+		}
+	}
+	mlx->def_color = def;
 }

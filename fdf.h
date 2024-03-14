@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/13 10:26:54 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:04:46 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 #  define Q 12
 #  define E 14
 #  define R 15
+#  define B 11
+#  define P 35
+#  define G 5
+#  define Y 16
 #  define UP 126
 #  define LEFT 123
 #  define DOWN 125
@@ -49,6 +53,10 @@
 #  define Q 113
 #  define E 101
 #  define R 114
+#  define G 0
+#  define P 0
+#  define B 0
+#  define Y 0
 #  define UP 65362
 #  define LEFT 65361
 #  define DOWN 65364
@@ -66,6 +74,14 @@ typedef enum	s_dir
 	Right,
 	Left
 }	t_dir;
+
+typedef enum	s_bcolor
+{
+	Pink,
+	Blue,
+	Yellow,
+	Green
+}	t_bcolor;
 
 typedef struct	s_data
 {
@@ -116,7 +132,9 @@ typedef struct	s_mlx
 	void	*mlx;
 	void	*mlx_window;
 	int		bon;
+	int		***def_color;
 	float	***points;
+	int		current_color;
 	t_data	img;
 	t_map	*map;
 	t_cam	*camera;
@@ -134,12 +152,8 @@ int		ft_atoi_base(char *str, char *base);
 float	***return_array(t_mlx *mlx, int height, int width, int scale);
 
 // temp
-/* void	pixel_put(t_data *img, int x, int y, unsigned int color); */
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
-//void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend);
-/* void	draw_line(t_mlx *mlx, int xstart, int xend, int ystart, int yend, int color); */
 void	draw_line(t_mlx *mlx, t_point start, t_point end, int color);
-//void	draw(t_mlx *mlx);
 void	draw(t_mlx *mlx);
 
 /*	manipulate	*/
@@ -161,9 +175,7 @@ int		get_mouse_function(int code, int scale, void *param);
 void	zoom(void *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
-//int		gradient_color(int start, int end, float progress);
 int		gradient_color(t_point start, t_point end, float progress);
-//t_point	return_point(t_mlx *mlx, float x, float y);
 t_point	return_point(t_mlx *mlx, float x, float y, int i, int j);
 
 /*	transform	*/
@@ -187,7 +199,8 @@ void	get_default_position(t_mlx *mlx, float ***points);
 int		get_z_max(t_mlx *mlx);
 int		get_z_min(t_map *map);
 
-void	sphereize(t_mlx *mlx);
-int	disco_ball(t_mlx *mlx);
+int		disco_ball(t_mlx *mlx, int keycode);
+void	get_default_color(t_mlx *mlx);
+int		change_colors(t_mlx *mlx, int d, int keycode);
 
 #endif
