@@ -24,6 +24,21 @@ void	reset(t_mlx *mlx)
 	draw_image(mlx);
 }
 
+void	parallel(t_mlx *mlx)
+{
+	if (mlx->points)
+		free(mlx->points);	
+	mlx->points = return_array(mlx, mlx->map->height, mlx->map->width, mlx->camera->zoom);
+	float x, y, z;
+	x = mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
+	y = mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
+	z = mlx->points[mlx->map->height / 2][mlx->map->width / 2][1];
+	move_to_origin(mlx);
+	apply_transformation(mlx->points, return_matrix('x', -5 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	move_shape_back(mlx, x, y, z);
+	draw_image(mlx);
+}
+
 int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 {
 	if (keycode == ESC)
@@ -48,6 +63,10 @@ int	get_key_pressed(int keycode, t_mlx *mlx, int scale)
 			mlx->bon = 0;
 		else
 			mlx->bon = 1;
+	}
+	else if (keycode == 99)
+	{
+		parallel(mlx);
 	}
 	else
 		translate(mlx, keycode);
@@ -104,9 +123,6 @@ void	rotate_shape(t_mlx *mlx, int keycode)
 	axes[0] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
 	axes[1] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 	axes[2] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][1];
-	// axes[0] = round(mlx->points[mlx->map->height / 2][mlx->map->width / 2][0]);
-	// axes[1] = round(mlx->points[mlx->map->height / 2][mlx->map->width / 2][2]);
-	// axes[2] = round(mlx->points[mlx->map->height / 2][mlx->map->width / 2][1]);
 	move_to_origin(mlx);
 	if (keycode == W)
 		apply_transformation(mlx->points, return_matrix('x', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);

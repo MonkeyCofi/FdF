@@ -30,12 +30,6 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 //	 apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
 //}
 
-void	parallel(t_mlx *mlx)
-{
-	 apply_transformation(mlx->points, return_matrix('y', 300 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-	 apply_transformation(mlx->points, return_matrix('x', -30 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-}
-
 float	get_default_scale(t_mlx *mlx)
 {
 	float	scale_height;
