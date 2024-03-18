@@ -37,6 +37,7 @@ int	change_colors(t_mlx *mlx, int d, int keycode)
 int	disco_ball(t_mlx *mlx, int keycode)
 {
 	float	centers[3];
+	float	**matrix;
 
 	if (mlx->bon)
 	{
@@ -44,7 +45,11 @@ int	disco_ball(t_mlx *mlx, int keycode)
 		centers[1] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][1];
 		centers[2] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 		move_to_origin(mlx);
-		apply_transformation(mlx->points, return_matrix('z', 0.0010 * (180 / 3.1415)), mlx->map->height, mlx->map->width);
+		matrix =  return_matrix('z', 0.0010 * (180 / 3.1415));
+		apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+		for (int i = 0; i < 3; i++)
+			free(matrix[i]);
+		free(matrix);
 		move_shape_back(mlx, centers[0], centers[2], centers[1]);
 		change_colors(mlx, 0, keycode);
 	}

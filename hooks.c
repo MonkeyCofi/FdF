@@ -119,23 +119,49 @@ void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent)
 void	rotate_shape(t_mlx *mlx, int keycode)
 {
 	float			axes[3];
+	float			**matrix;
 
 	axes[0] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
 	axes[1] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 	axes[2] = mlx->points[mlx->map->height / 2][mlx->map->width / 2][1];
 	move_to_origin(mlx);
+	matrix = NULL;
 	if (keycode == W)
-		apply_transformation(mlx->points, return_matrix('x', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('x', -4 * (3.1415 / 180));
+		apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	}
 	else if (keycode == S)
-		apply_transformation(mlx->points, return_matrix('x', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('x', 4 * (3.1415 / 180));
+		apply_transformation(mlx->points,matrix, mlx->map->height, mlx->map->width);
+	}
 	else if (keycode == A)
-		apply_transformation(mlx->points, return_matrix('y', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('y', 4 * (3.1415 / 180));
+		apply_transformation(mlx->points,matrix, mlx->map->height, mlx->map->width);
+	}
 	else if (keycode == D)
-		apply_transformation(mlx->points, return_matrix('y', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('y', -4 * (3.1415 / 180));
+		apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	}
 	else if (keycode == Q)
-		apply_transformation(mlx->points, return_matrix('z', 4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('z', 4 * (3.1415 / 180));
+		apply_transformation(mlx->points,matrix, mlx->map->height, mlx->map->width);
+	}
 	else if (keycode == E)
-		apply_transformation(mlx->points, return_matrix('z', -4 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
+	{
+		matrix = return_matrix('z', -4 * (3.1415 / 180));
+		apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	}
+	if (matrix)
+	{
+		for (int i = 0; i < 3; i++)
+			free(matrix[i]);
+		free(matrix);
+	}
 	move_shape_back(mlx, axes[0], axes[1], axes[2]);
 	draw_image(mlx);
 }
@@ -181,7 +207,16 @@ int	escape(t_mlx *mlx)
 {
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx_destroy_window(mlx->mlx, mlx->mlx_window);
+	free(mlx->camera);
+	for (int i = 0; i < mlx->map->height; i++)
+	{
+		for (int j = 0; j < mlx->map->width; j++)
+			free(mlx->map->z_coord[i][j]);
+		free(mlx->map->z_coord[i]);
+	}
+	free(mlx->map->z_coord);
+	free(mlx->map);
+	free(mlx->points);
 	exit(EXIT_SUCCESS);
-	return (0);
 }
 

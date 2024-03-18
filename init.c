@@ -15,14 +15,23 @@
 void	init_camera(t_mlx *mlx)
 {
 	t_cam	*camera;
+	float	**matrix;
 
 	camera = malloc(sizeof(t_cam));
 	if (!camera)
 		exit(EXIT_FAILURE);
 	camera->x_angle = -62 * (3.1415 / 180);
 	camera->y_angle = 45 * (3.1415 / 180);
-	apply_transformation(mlx->points, return_matrix('y', camera->y_angle), mlx->map->height, mlx->map->width);
-	apply_transformation(mlx->points, return_matrix('x', camera->x_angle), mlx->map->height, mlx->map->width);
+	matrix = return_matrix('y', camera->y_angle);
+	apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	for (int i = 0; i < 3; i++)
+		free(matrix[i]);
+	free(matrix);
+	matrix = return_matrix('x', camera->x_angle);
+	apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	for (int i = 0; i < 3; i++)
+		free(matrix[i]);
+	free(matrix);
 	camera->x_offset = (WIDTH / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
 	camera->y_offset = (HEIGHT / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
 	camera->zoom = get_default_scale(mlx);
