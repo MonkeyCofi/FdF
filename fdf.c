@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/14 21:10:03 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:04:49 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color)
 
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		p = mlx->img.addr + (y * mlx->img.line_length) + (x * (mlx->img.bpp / 8));
+		p = mlx->img.addr + (y * mlx->img.line_length) \
+			+ (x * (mlx->img.bpp / 8));
 		*(unsigned int *)p = color;
 	}
 }
-
-//void	iso(t_mlx *mlx, float ***point_array)
-//{
-//	/*										best projections															*/
-//	 apply_transformation(point_array, return_matrix('y', 45 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-//	 apply_transformation(point_array, return_matrix('x', -62 * (3.1415 / 180)), mlx->map->height, mlx->map->width);
-//}
 
 float	get_default_scale(t_mlx *mlx)
 {
@@ -37,7 +31,6 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	//factor = (float)get_z_max(mlx) * 0.25;
 	factor = 1.3;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
@@ -49,10 +42,10 @@ float	get_default_scale(t_mlx *mlx)
 	return (scale_z_height);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_mlx	mlx;
-	
+
 	if (ac < 2)
 	{
 		ft_printf("Usage: ./fdf [mapfile]\n");
@@ -62,7 +55,8 @@ int main(int ac, char **av)
 	init_mlx(&mlx);
 	parse_map(av[1], mlx.map);
 	get_default_color(&mlx);
-	mlx.points = return_array(&mlx, mlx.map->height, mlx.map->width, get_default_scale(&mlx));
+	mlx.points = return_array(&mlx, mlx.map->height, \
+		mlx.map->width, get_default_scale(&mlx));
 	if (APP)
 		mlx_hook(mlx.mlx_window, 2, 0, get_key_pressed, &mlx);
 	else

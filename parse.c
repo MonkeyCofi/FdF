@@ -79,7 +79,9 @@ void	get_coords(char *line, int width, int **z)
 			j++;
 		if (coords[i][j] == ',')
 		{
+			char *temp = coords[i];
 			coords[i] = standardize_color(&coords[i][j]);
+			free(temp);
 			z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
 		}
 		else

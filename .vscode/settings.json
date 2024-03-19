@@ -12,6 +12,8 @@
 		"locale": "c",
 		"memory": "c",
 		"optional": "c",
-		"ostream": "c"
+		"ostream": "c",
+		"math.h": "c",
+		"mlx.h": "c"
 	}
 }

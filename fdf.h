@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/14 21:04:46 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:12:29 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 #  define ESC 65307
 # endif
 
-typedef enum	s_dir
+typedef enum s_dir
 {
 	Up,
 	Down,
@@ -75,15 +75,7 @@ typedef enum	s_dir
 	Left
 }	t_dir;
 
-typedef enum	s_bcolor
-{
-	Pink,
-	Blue,
-	Yellow,
-	Green
-}	t_bcolor;
-
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -92,7 +84,7 @@ typedef struct	s_data
 	int		endian;
 }	t_data;
 
-typedef struct	s_cam
+typedef struct s_cam
 {
 	float	zoom;
 	float	x_offset;
@@ -103,14 +95,14 @@ typedef struct	s_cam
 	float	z_angle;
 }	t_cam;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	int	height;
 	int	width;
 	int	***z_coord;
 }	t_map;
 
-typedef struct	s_line
+typedef struct s_line
 {
 	int		dx;
 	int		dy;
@@ -119,7 +111,7 @@ typedef struct	s_line
 	float	yinc;
 }	t_line;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	float	x;
 	float	y;
@@ -127,7 +119,7 @@ typedef struct	s_point
 	int		color;
 }	t_point;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void	*mlx;
 	void	*mlx_window;
@@ -140,7 +132,6 @@ typedef struct	s_mlx
 	t_cam	*camera;
 }	t_mlx;
 
-//void	parse_map(t_map *map, char *file);
 void	parse_map(char *file, t_map *map);
 
 /*		init		*/
@@ -153,7 +144,7 @@ float	***return_array(t_mlx *mlx, int height, int width, int scale);
 
 // temp
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
-void	draw_line(t_mlx *mlx, t_point start, t_point end, int color);
+void	draw_line(t_mlx *mlx, t_point start, t_point end);
 void	draw(t_mlx *mlx);
 
 /*	manipulate	*/
@@ -161,22 +152,22 @@ float	**matrix_x(float angle);
 float	**matrix_y(float angle);
 float	**matrix_z(float angle);
 float	**return_matrix(char axis, float angle);
-void	apply_transformation(float ***arr, float **matrix, int height, int width);
+void	apply_transformation(float ***arr, float **matrix, int h, int w);
 
 /*	hooks	*/
 int		escape(t_mlx *mlx);
 int		get_key_pressed(int keycode, t_mlx *mlx, int scale);
-int     get_color(t_mlx *mlx, int i, int j);
-int     draw_image(t_mlx *mlx);
+int		get_color(t_mlx *mlx, int i, int j);
+int		draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
 int		get_mouse_function(int code, int scale, void *param);
 
-void	zoom(void *mlx, float scale, int code);
+void	zoom(t_mlx *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
 int		gradient_color(t_point start, t_point end, float progress);
-t_point	return_point(t_mlx *mlx, float x, float y, int i, int j);
+//t_point	ret_point(t_mlx *mlx, float x, float y, int i, int j);
 
 /*	transform	*/
 void	move_to_origin(t_mlx *mlx);
@@ -187,10 +178,12 @@ void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis);
 void	valid_map(char *map);
 char	*standardize_color(char *color);
 void	error_and_free(t_map *map, t_mlx *mlx, char *error_message);
-void	free_double_str_line(char *line, char **double_str, char *error_message);
+void	free_double_str_line(char *line, char **doub_str, char *err_msg);
 void	check_map(char *filename);
 
 /*		Utils		*/
+void	move_points(t_mlx *mlx, int position);
+void	reset(t_mlx *m);
 int		return_minimum(int a, int b);
 float	get_default_scale(t_mlx *mlx);
 int		absolute(int value);
@@ -202,5 +195,10 @@ int		get_z_min(t_map *map);
 int		disco_ball(t_mlx *mlx, int keycode);
 void	get_default_color(t_mlx *mlx);
 int		change_colors(t_mlx *mlx, int d, int keycode);
+
+/*		Frees		*/
+void	free_matrix(float **matrix);
+void	free_points(t_mlx *mlx, float ***points);
+void	free_triple_int(t_mlx *mlx, int ***t_int);
 
 #endif

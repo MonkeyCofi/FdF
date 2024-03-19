@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:18:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 01:32:21 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:05:04 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ void	check_map(char *filename)
 		}
 		free(line);
 		line = get_next_line(file);
-		
 	}
 }
