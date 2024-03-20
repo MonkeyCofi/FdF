@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:41:08 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 17:15:33 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:27:03 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis)
 
 	move_to_origin(mlx);
 	matrix = return_matrix(axis, ((*angle) - 4) * (3.1415 / 180));
-	apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
+	apply_transformation(mlx->points, matrix, \
+		mlx->map->height, mlx->map->width);
 	free_matrix(matrix);
 	move_shape_back(mlx, axes[0], axes[1], axes[2]);
 }

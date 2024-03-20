@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 17:12:29 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:23:17 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 #  define P 35
 #  define G 5
 #  define Y 16
+#  define C 8
+#  define X 7
+#  define Z 6
+#  define V 9
 #  define UP 126
 #  define LEFT 123
 #  define DOWN 125
@@ -123,6 +127,8 @@ typedef struct s_point
 
 typedef struct s_mlx
 {
+	int		i;
+	int		j;
 	void	*mlx;
 	void	*mlx_window;
 	int		bon;
@@ -157,8 +163,11 @@ float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int h, int w);
 
 /*	Extra projections	*/
-void    top_down(t_mlx *mlx);
+void	top_down(t_mlx *mlx);
 void	side_view(t_mlx *mlx);
+void	front_view(t_mlx *mlx);
+void	op_pers(t_mlx *mlx);
+
 /*			hooks		*/
 int		escape(t_mlx *mlx);
 int		get_key_pressed(int keycode, t_mlx *mlx, int scale);
@@ -167,6 +176,7 @@ int		draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
 int		get_mouse_function(int code, int scale, void *param);
+void	check_bonus_hook(int k, t_mlx *mlx);
 
 void	zoom(t_mlx *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
@@ -183,23 +193,20 @@ void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis);
 void	valid_map(char *map);
 char	*standardize_color(char *color);
 void	error_and_free(t_map *map, t_mlx *mlx, char *error_message);
-void	free_double_str_line(char *line, char **doub_str, char *err_msg);
+void	free_d_strline(char *line, char **d_str, char *err_msg, int exit_in);
 void	check_map(char *filename);
 
 /*		Utils		*/
 void	move_points(t_mlx *mlx, int position);
 void	reset(t_mlx *m);
-int		return_minimum(int a, int b);
 float	get_default_scale(t_mlx *mlx);
 int		absolute(int value);
-int		print_instructions(t_mlx *mlx);
 void	get_default_position(t_mlx *mlx, float ***points);
 int		get_z_max(t_mlx *mlx);
-int		get_z_min(t_map *map);
 
-int		disco_ball(t_mlx *mlx, int keycode);
+int		color_spin(t_mlx *mlx);
 void	get_default_color(t_mlx *mlx);
-int		change_colors(t_mlx *mlx, int d, int keycode);
+int		change_colors(t_mlx *mlx, int d);
 
 /*		Frees		*/
 void	free_matrix(float **matrix);

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:53:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/12 17:52:27 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:13:58 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ float	**matrix_x(float angle)
 				matrix[i][j] = sin(angle);
 			else
 				matrix[i][j] = cos(angle);
-		}		
+		}
 	}
 	return (matrix);
 }
@@ -107,9 +107,9 @@ float	**return_matrix(char axis, float angle)
 		return (matrix_y(angle));
 	else
 		return (matrix_z(angle));
-
 }
-void	apply_transformation(float ***arr, float **matrix, int height, int width)
+
+void	apply_transformation(float ***arr, float **matrix, int h, int w)
 {
 	int		i;
 	int		j;
@@ -118,10 +118,10 @@ void	apply_transformation(float ***arr, float **matrix, int height, int width)
 	float	simp[3];
 
 	i = -1;
-	while (++i < height)
+	while (++i < h)
 	{
 		j = -1;
-		while (++j < width)
+		while (++j < w)
 		{
 			k = -1;
 			while (++k < 3)

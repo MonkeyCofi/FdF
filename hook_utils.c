@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:03:29 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 17:04:54 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:33:27 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	move_to_origin(t_mlx *mlx)
 		}
 	}
 }
+
 void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent)
 {
 	int	i;
@@ -54,6 +55,7 @@ void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent)
 		}
 	}
 }
+
 void	move_points(t_mlx *mlx, int position)
 {
 	int	i;
@@ -76,6 +78,7 @@ void	move_points(t_mlx *mlx, int position)
 		}
 	}
 }
+
 void	reset(t_mlx *m)
 {
 	int	height;
@@ -91,4 +94,20 @@ void	reset(t_mlx *m)
 	init_camera(m);
 	get_default_position(m, m->points);
 	draw_image(m);
+}
+
+void	check_bonus_hook(int k, t_mlx *mlx)
+{
+	if (k == P)
+		mlx->current_color = 255 << 16 | 255;
+	else if (k == Y)
+		mlx->current_color = 255 << 16 | 255 << 8;
+	else if (k == B)
+		mlx->current_color = 255 << 8 | 255;
+	else if (k == G)
+		mlx->current_color = 255 << 8;
+	if (mlx->bon)
+		mlx->bon = 0;
+	else
+		mlx->bon = 1;
 }

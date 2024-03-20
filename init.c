@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:32:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/14 21:00:37 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:08:58 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,26 @@ void	init_camera(t_mlx *mlx)
 {
 	t_cam	*camera;
 	float	**matrix;
+	int		height;
+	int		width;
 
 	camera = malloc(sizeof(t_cam));
 	if (!camera)
 		exit(EXIT_FAILURE);
+	height = mlx->map->height;
+	width = mlx->map->width;
 	camera->x_angle = -62 * (3.1415 / 180);
 	camera->y_angle = 45 * (3.1415 / 180);
 	matrix = return_matrix('y', camera->y_angle);
-	apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
-	for (int i = 0; i < 3; i++)
-		free(matrix[i]);
-	free(matrix);
+	apply_transformation(mlx->points, matrix, height, width);
+	free_matrix(matrix);
 	matrix = return_matrix('x', camera->x_angle);
-	apply_transformation(mlx->points, matrix, mlx->map->height, mlx->map->width);
-	for (int i = 0; i < 3; i++)
-		free(matrix[i]);
-	free(matrix);
-	camera->x_offset = (WIDTH / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][0];
-	camera->y_offset = (HEIGHT / 2) - mlx->points[mlx->map->height / 2][mlx->map->width / 2][2];
+	apply_transformation(mlx->points, matrix, height, width);
+	free_matrix(matrix);
+	camera->x_offset = (WIDTH / 2) - mlx->points[height / 2][width / 2][0];
+	camera->y_offset = (HEIGHT / 2) - mlx->points[height / 2][width / 2][2];
+	camera->z_offset = (HEIGHT / 2) - mlx->points[height / 2][width / 2][1] \
+		+ camera->y_offset;
 	camera->zoom = get_default_scale(mlx);
 	mlx->camera = camera;
 }
@@ -49,7 +51,8 @@ void	init_mlx(t_mlx *mlx)
 	mlx->img.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	if (!mlx->img.img)
 		exit(EXIT_FAILURE);
-	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.line_length, &mlx->img.endian);
+	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, \
+		&mlx->img.line_length, &mlx->img.endian);
 	mlx->points = NULL;
 	mlx->camera = NULL;
 	mlx->bon = 0;

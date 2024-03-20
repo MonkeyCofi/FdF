@@ -6,18 +6,18 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:18:44 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 15:02:19 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:38:15 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point	ret_point(t_mlx *mlx, float x, float y, int i, int j)
+static t_point	ret_point(t_mlx *mlx, int i, int j)
 {
 	t_point	point;
 
-	point.x = x;
-	point.y = y;
+	point.x = mlx->points[i][j][0];
+	point.y = mlx->points[i][j][2];
 	point.color = get_color(mlx, i, j);
 	return (point);
 }
@@ -34,13 +34,9 @@ void	draw(t_mlx *m)
 		while (++j < m->map->width)
 		{
 			if (i < m->map->height - 1)
-				draw_line(m, ret_point(m, m->points[i][j][0], \
-				m->points[i][j][2], i, j), ret_point(m, m->points[i + 1][j][0], \
-						m->points[i + 1][j][2], i + 1, j));
+				draw_line(m, ret_point(m, i, j), ret_point(m, i + 1, j));
 			if (j < m->map->width - 1)
-				draw_line(m, ret_point(m, m->points[i][j][0], \
-				m->points[i][j][2], i, j), ret_point(m, m->points[i][j + 1][0], \
-					m->points[i][j + 1][2], i, j + 1));
+				draw_line(m, ret_point(m, i, j), ret_point(m, i, j + 1));
 		}
 	}
 	mlx_put_image_to_window(m->mlx, m->mlx_window, m->img.img, 0, 0);

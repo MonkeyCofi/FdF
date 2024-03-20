@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/11 01:51:39 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:30:55 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	get_height(char *filename)
 	{
 		line = get_next_line(file);
 		if (!line)
-			break;
+			break ;
 		rows++;
 		free(line);
 	}
@@ -58,6 +58,16 @@ int	get_height(char *filename)
 		free(line);
 	close(file);
 	return (rows);
+}
+
+static void	fill_color(char **coords, int **z, int i, int j)
+{
+	char	*temp;
+
+	temp = coords[i];
+	coords[i] = standardize_color(&coords[i][j]);
+	free(temp);
+	z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
 }
 
 void	get_coords(char *line, int width, int **z)
@@ -73,22 +83,17 @@ void	get_coords(char *line, int width, int **z)
 		j = 0;
 		z[i] = malloc(sizeof(int) * 2);
 		if (!z[i])
-			free_double_str_line(line, coords, "Could not malloc for number array");
+			free_d_strline(line, coords, \
+				"Could not malloc for number array", 1);
 		z[i][0] = ft_atoi(coords[i]);
 		while (coords[i][j] != ',' && coords[i][j])
 			j++;
 		if (coords[i][j] == ',')
-		{
-			char *temp = coords[i];
-			coords[i] = standardize_color(&coords[i][j]);
-			free(temp);
-			z[i][1] = ft_atoi_base(&coords[i][j], "0123456789abcdef");
-		}
+			fill_color(coords, z, i, j);
 		else
 			z[i][1] = -1;
-		free(coords[i]);
 	}
-	free(coords);
+	free_d_strline(NULL, coords, NULL, 0);
 }
 
 void	parse_map(char *file, t_map *map)

@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 15:04:49 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:25:42 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	factor = 1.3;
+	factor = 1.9;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
-	scale_z_height = HEIGHT / (get_z_max(mlx) * factor);
-	if (scale_height > scale_width)
-		return (scale_height);
-	else if (scale_width > scale_height)
-		return (scale_width);
-	return (scale_z_height);
+	scale_z_height = HEIGHT / ((get_z_max(mlx) + (mlx->map->height)) * factor);
+	if (scale_height < scale_width)
+		return (round(scale_height));
+	if (scale_z_height < scale_height)
+		return (round(scale_z_height));
+	return (round(scale_width));
 }
 
 int	main(int ac, char **av)
@@ -63,7 +63,7 @@ int	main(int ac, char **av)
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
-	mlx_loop_hook(mlx.mlx, disco_ball, &mlx);
+	mlx_loop_hook(mlx.mlx, color_spin, &mlx);
 	draw(&mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
 	mlx_loop(mlx.mlx);

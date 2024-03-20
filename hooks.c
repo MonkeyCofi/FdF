@@ -6,34 +6,11 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:06:56 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/19 17:07:49 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:23:25 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// void	top_down(t_mlx *mlx)
-// {
-// 	int		height;
-// 	int		width;
-// 	float	**matrix;
-// 	float	centers[3];
-//
-// 	height = mlx->map->height;
-// 	width = mlx->map->width;
-// 	if (mlx->points)
-// 		free(mlx->points);
-// 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
-// 	centers[0] = mlx->points[height / 2][width / 2][0];
-// 	centers[1] = mlx->points[height / 2][width / 2][2];
-// 	centers[2] = mlx->points[height / 2][width / 2][1];
-// 	move_to_origin(mlx);
-// 	matrix = return_matrix('x', 0 * (3.1415 / 180));
-// 	apply_transformation(mlx->points, matrix, height, width);
-// 	free_matrix(matrix);
-// 	move_shape_back(mlx, centers[0], centers[1], centers[2]);
-// 	draw_image(mlx);
-// }
 
 int	get_key_pressed(int k, t_mlx *mlx, int scale)
 {
@@ -46,27 +23,18 @@ int	get_key_pressed(int k, t_mlx *mlx, int scale)
 	else if (k == PLUS || k == MINUS)
 		zoom((t_mlx *)mlx, scale, k);
 	else if (k == B || k == P || k == G || k == Y)
-	{
-		if (k == P)
-			mlx->current_color = 255 << 16 | 255;
-		else if (k == Y)
-			mlx->current_color = 255 << 16 | 255 << 8;
-		else if (k == B)
-			mlx->current_color = 255 << 8 | 255;
-		else if (k == G)
-			mlx->current_color = 255 << 8;
-		if (mlx->bon)
-			mlx->bon = 0;
-		else
-			mlx->bon = 1;
-	}
+		check_bonus_hook(k, mlx);
 	else if (k == C)
 		top_down(mlx);
 	else if (k == X)
 		side_view(mlx);
+	else if (k == Z)
+		front_view(mlx);
+	else if (k == V)
+		op_pers(mlx);
 	else
 		translate(mlx, k);
-	ft_printf("Keycode: %d\n", k);
+	ft_printf("Key pressed: %d\n", k);
 	return (0);
 }
 
