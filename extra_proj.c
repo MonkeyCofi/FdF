@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:39:14 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 21:35:22 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:40:22 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	move_center(t_mlx *mlx, float x, float y, float z)
 {
 	int	i;
 	int	j;
+	int	out;
 
 	i = -1;
+	out = 0;
 	while (++i < mlx->map->height)
 	{
 		j = -1;
@@ -25,9 +27,19 @@ void	move_center(t_mlx *mlx, float x, float y, float z)
 		{
 			mlx->points[i][j][0] += x + (WIDTH / 3);
 			mlx->points[i][j][2] += y + (HEIGHT / 3);
+			if (mlx->points[i][j][2] > HEIGHT)
+				out = 1;
 		}
 	}
-	(void)y;
+	if (!out)
+		return ;
+	i = -1;
+	while (++i < mlx->map->height)
+	{
+		j = -1;
+		while (++j < mlx->map->width)
+			mlx->points[i][j][2] -= 200;
+	}
 	(void)z;
 }
 

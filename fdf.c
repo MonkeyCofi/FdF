@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 15:25:42 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:51:33 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ float	get_default_scale(t_mlx *mlx)
 	float	scale_z_height;
 	float	factor;
 
-	factor = 1.9;
+	factor = 1;
 	scale_height = HEIGHT / (mlx->map->height * factor);
 	scale_width = WIDTH / (mlx->map->width * factor);
 	scale_z_height = HEIGHT / ((get_z_max(mlx) + (mlx->map->height)) * factor);
-	if (scale_height < scale_width)
-		return (round(scale_height));
 	if (scale_z_height < scale_height)
 		return (round(scale_z_height));
+	if (scale_height < scale_width)
+		return (round(scale_height));
 	return (round(scale_width));
 }
 
