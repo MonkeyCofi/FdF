@@ -12,28 +12,28 @@
 
 #include "fdf.h"
 
-void	parallel(t_mlx *mlx)
-{
-	int		height;
-	int		width;
-	float	**matrix;
-	float	centers[3];
-
-	height = mlx->map->height;
-	width = mlx->map->width;
-	if (mlx->points)
-		free(mlx->points);
-	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
-	centers[0] = mlx->points[height / 2][width / 2][0];
-	centers[1] = mlx->points[height / 2][width / 2][2];
-	centers[2] = mlx->points[height / 2][width / 2][1];
-	move_to_origin(mlx);
-	matrix = return_matrix('x', -5 * (3.1415 / 180));
-	apply_transformation(mlx->points, matrix, height, width);
-	free_matrix(matrix);
-	move_shape_back(mlx, centers[0], centers[2], centers[1]);
-	draw_image(mlx);
-}
+// void	top_down(t_mlx *mlx)
+// {
+// 	int		height;
+// 	int		width;
+// 	float	**matrix;
+// 	float	centers[3];
+//
+// 	height = mlx->map->height;
+// 	width = mlx->map->width;
+// 	if (mlx->points)
+// 		free(mlx->points);
+// 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
+// 	centers[0] = mlx->points[height / 2][width / 2][0];
+// 	centers[1] = mlx->points[height / 2][width / 2][2];
+// 	centers[2] = mlx->points[height / 2][width / 2][1];
+// 	move_to_origin(mlx);
+// 	matrix = return_matrix('x', 0 * (3.1415 / 180));
+// 	apply_transformation(mlx->points, matrix, height, width);
+// 	free_matrix(matrix);
+// 	move_shape_back(mlx, centers[0], centers[1], centers[2]);
+// 	draw_image(mlx);
+// }
 
 int	get_key_pressed(int k, t_mlx *mlx, int scale)
 {
@@ -60,8 +60,10 @@ int	get_key_pressed(int k, t_mlx *mlx, int scale)
 		else
 			mlx->bon = 1;
 	}
-	else if (k == 99)
-		parallel(mlx);
+	else if (k == C)
+		top_down(mlx);
+	else if (k == X)
+		side_view(mlx);
 	else
 		translate(mlx, k);
 	ft_printf("Keycode: %d\n", k);

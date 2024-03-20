@@ -57,6 +57,8 @@
 #  define P 112
 #  define B 98
 #  define Y 121
+#  define C 99
+#  define X 120
 #  define UP 65362
 #  define LEFT 65361
 #  define DOWN 65364
@@ -154,7 +156,10 @@ float	**matrix_z(float angle);
 float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int h, int w);
 
-/*	hooks	*/
+/*	Extra projections	*/
+void    top_down(t_mlx *mlx);
+void	side_view(t_mlx *mlx);
+/*			hooks		*/
 int		escape(t_mlx *mlx);
 int		get_key_pressed(int keycode, t_mlx *mlx, int scale);
 int		get_color(t_mlx *mlx, int i, int j);

@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCS = fdf.c parse.c init.c ft_atoi_base.c draw.c matrix.c hooks.c \
 	   colors.c mouse_hooks.c transform.c check_map.c utils.c sphere.c \
-	   frees.c colors2.c hook_utils.c
+	   frees.c colors2.c hook_utils.c extra_proj.c
 
 OBJS = $(SRCS:.c=.o)
 
