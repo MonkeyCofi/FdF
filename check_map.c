@@ -73,26 +73,22 @@ void	free_d_strline(char *line, char **d_str, char *err_msg, int exit_in)
 		exit(EXIT_FAILURE);
 }
 
-void	check_map(char *filename)
+void	check_map_width(int file, int width)
 {
-	int		file;
-	int		i;
 	char	*line;
+	char	**spl;
+	int		col_count;
 
-	file = open(filename, O_RDONLY);
-	if (file == -1)
-		exit(EXIT_FAILURE);
 	line = get_next_line(file);
 	while (line)
 	{
-		i = -1;
-		while (line[++i])
-		{
-			if (line[i] == ' ')
-				if (line[i + 1] == '\0')
-					exit(EXIT_FAILURE);
-		}
-		free(line);
+		col_count = 0;
+		spl = ft_split(line, " \n");
+		while (spl[col_count])
+			col_count++;
+		if (col_count != width)
+			free_d_strline(line, spl, "Unequal width", 1);
+		free_d_strline(line, spl, NULL, 0);
 		line = get_next_line(file);
 	}
 }

@@ -12,7 +12,21 @@
 
 #include "libft.h"
 
-static int	count_words(char const *s, char c)
+static int	is_separator(char *sep, char c)
+{
+	int	i;
+
+	i = 0;
+	while (sep[i])
+	{
+		if (c == sep[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	count_words(char const *s, char *sep)
 {
 	int	words;
 	int	letters;
@@ -23,26 +37,26 @@ static int	count_words(char const *s, char c)
 	letters = 0;
 	while (s[i])
 	{
-		if (s[i] != c)
+		if (!is_separator(sep, s[i]))
 			letters++;
-		else if (s[i] == c && letters)
+		else if (is_separator(sep, s[i]) && letters)
 		{
 			letters = 0;
 			words++;
 		}
-		if (s[i + 1] == '\0' && s[i] != c)
+		if (s[i + 1] == '\0' && !is_separator(sep, s[i]))
 			words++;
 		i++;
 	}
 	return (words);
 }
 
-static int	get_length(const char *s, char c)
+static int	get_length(const char *s, char *sep)
 {
 	int	length;
 
 	length = 0;
-	while (*s != '\0' && *s != c)
+	while (*s != '\0' && !is_separator(sep, *s))
 	{
 		length++;
 		s++;
@@ -50,7 +64,7 @@ static int	get_length(const char *s, char c)
 	return (length);
 }
 
-static void	add_words(char **words, char *s, char c)
+static void	add_words(char **words, char *s, char *sep)
 {
 	char	*word;
 	int		current_word;
@@ -60,12 +74,12 @@ static void	add_words(char **words, char *s, char c)
 	while (*s)
 	{
 		i = 0;
-		if (*s != c)
+		if (!is_separator(sep, *s))
 		{
-			word = (char *)malloc(sizeof(char) * (get_length(s, c) + 1));
+			word = (char *)malloc(sizeof(char) * (get_length(s, sep) + 1));
 			if (!word)
 				return ;
-			while (*s != c && *s)
+			while (*s && !is_separator(sep, *s))
 				word[i++] = *s++;
 			word[i] = '\0';
 			words[current_word++] = ft_strdup(word);
@@ -77,17 +91,17 @@ static void	add_words(char **words, char *s, char c)
 	words[current_word] = 0;
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *sep)
 {
 	char	**words;
 	int		word_count;
 
 	if (!s)
 		return (NULL);
-	word_count = count_words(s, c);
+	word_count = count_words(s, sep);
 	words = (char **)malloc(sizeof(char *) * (word_count + 1));
 	if (!words)
 		return (NULL);
-	add_words(words, (char *)s, c);
+	add_words(words, (char *)s, sep);
 	return (words);
 }

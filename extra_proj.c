@@ -27,7 +27,7 @@ void	move_center(t_mlx *mlx, float x, float y, float z)
 		{
 			mlx->points[i][j][0] += x + (WIDTH / 3);
 			mlx->points[i][j][2] += y + (HEIGHT / 3);
-			if (mlx->points[i][j][2] > HEIGHT)
+			if (mlx->points[i][j][2] > HEIGHT) 
 				out = 1;
 		}
 	}

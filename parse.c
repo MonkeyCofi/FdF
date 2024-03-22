@@ -21,17 +21,14 @@ int	get_width(char *filename)
 
 	file = open(filename, O_RDONLY);
 	if (file < 0)
-		return (0);
+		exit(EXIT_FAILURE);
 	n_columns = 0;
 	line = get_next_line(file);
-	column = ft_split(line, ' ');
-	while (column[n_columns])
-	{
+	column = ft_split(line, " \n");
+	while (column[n_columns])	
 		n_columns++;
-		free(column[n_columns]);
-	}
-	free(column);
-	free(line);
+	free_d_strline(line, column, NULL, 0);
+	check_map_width(file, n_columns);
 	close(file);
 	return (n_columns);
 }
@@ -76,7 +73,7 @@ void	get_coords(char *line, int width, int **z)
 	int		i;
 	int		j;
 
-	coords = ft_split(line, ' ');
+	coords = ft_split(line, " ");
 	i = -1;
 	while (coords[++i] && i < width)
 	{

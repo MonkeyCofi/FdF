@@ -63,6 +63,8 @@
 #  define Y 121
 #  define C 99
 #  define X 120
+#  define Z 122
+#  define V 118
 #  define UP 65362
 #  define LEFT 65361
 #  define DOWN 65364
@@ -145,12 +147,11 @@ void	parse_map(char *file, t_map *map);
 /*		init		*/
 void	init_camera(t_mlx *mlx);
 void	init_mlx(t_mlx *mlx);
-//void	init_map(t_mlx **mlx);
 void	init_map(t_mlx *mlx);
 int		ft_atoi_base(char *str, char *base);
 float	***return_array(t_mlx *mlx, int height, int width, int scale);
 
-// temp
+/*		draw		*/
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_mlx *mlx, t_point start, t_point end);
 void	draw(t_mlx *mlx);
@@ -161,6 +162,9 @@ float	**matrix_y(float angle);
 float	**matrix_z(float angle);
 float	**return_matrix(char axis, float angle);
 void	apply_transformation(float ***arr, float **matrix, int h, int w);
+void	move_to_origin(t_mlx *mlx);
+void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
+void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis);
 
 /*	Extra projections	*/
 void	top_down(t_mlx *mlx);
@@ -175,26 +179,20 @@ int		get_color(t_mlx *mlx, int i, int j);
 int		draw_image(t_mlx *mlx);
 int		translate(t_mlx *mlx, int keycode);
 void	rotate_shape(t_mlx *mlx, int keycode);
-int		get_mouse_function(int code, int scale, void *param);
 void	check_bonus_hook(int k, t_mlx *mlx);
 
 void	zoom(t_mlx *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
 int		gradient_color(t_point start, t_point end, float progress);
-//t_point	ret_point(t_mlx *mlx, float x, float y, int i, int j);
 
-/*	transform	*/
-void	move_to_origin(t_mlx *mlx);
-void	move_shape_back(t_mlx *mlx, float x_cent, float y_cent, float z_cent);
-void	transform_shape(t_mlx *mlx, float *axes, float *angle, char axis);
 
 /*		map check	*/
 void	valid_map(char *map);
 char	*standardize_color(char *color);
 void	error_and_free(t_map *map, t_mlx *mlx, char *error_message);
 void	free_d_strline(char *line, char **d_str, char *err_msg, int exit_in);
-void	check_map(char *filename);
+void	check_map_width(int file, int width);
 
 /*		Utils		*/
 void	move_points(t_mlx *mlx, int position);
