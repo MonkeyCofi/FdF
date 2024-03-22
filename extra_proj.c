@@ -6,13 +6,13 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:39:14 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 21:40:22 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:31:12 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	move_center(t_mlx *mlx, float x, float y, float z)
+void	move_center(t_mlx *mlx, float x, float y)
 {
 	int	i;
 	int	j;
@@ -27,8 +27,7 @@ void	move_center(t_mlx *mlx, float x, float y, float z)
 		{
 			mlx->points[i][j][0] += x + (WIDTH / 3);
 			mlx->points[i][j][2] += y + (HEIGHT / 3);
-			if (mlx->points[i][j][2] > HEIGHT) 
-				out = 1;
+			out = (mlx->points[i][j][2] > HEIGHT);
 		}
 	}
 	if (!out)
@@ -40,7 +39,6 @@ void	move_center(t_mlx *mlx, float x, float y, float z)
 		while (++j < mlx->map->width)
 			mlx->points[i][j][2] -= 200;
 	}
-	(void)z;
 }
 
 void	top_down(t_mlx *mlx)
@@ -57,12 +55,11 @@ void	top_down(t_mlx *mlx)
 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
 	centers[0] = mlx->points[height / 2][width / 2][0];
 	centers[1] = mlx->points[height / 2][width / 2][2];
-	centers[2] = mlx->points[height / 2][width / 2][1];
 	move_to_origin(mlx);
 	matrix = return_matrix('x', 0 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
 	free_matrix(matrix);
-	move_center(mlx, centers[0], centers[1], centers[2]);
+	move_center(mlx, centers[0], centers[1]);
 	draw_image(mlx);
 }
 
@@ -80,7 +77,6 @@ void	side_view(t_mlx *mlx)
 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
 	centers[0] = mlx->points[height / 2][width / 2][0];
 	centers[1] = mlx->points[height / 2][width / 2][2];
-	centers[2] = mlx->points[height / 2][width / 2][1];
 	move_to_origin(mlx);
 	matrix = return_matrix('x', -90 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
@@ -88,7 +84,7 @@ void	side_view(t_mlx *mlx)
 	matrix = return_matrix('z', 90 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
 	free_matrix(matrix);
-	move_center(mlx, centers[0], centers[1], centers[2]);
+	move_center(mlx, centers[0], centers[1]);
 	draw_image(mlx);
 }
 
@@ -106,11 +102,10 @@ void	front_view(t_mlx *mlx)
 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
 	centers[0] = mlx->points[height / 2][width / 2][0];
 	centers[1] = mlx->points[height / 2][width / 2][2];
-	centers[2] = mlx->points[height / 2][width / 2][1];
 	move_to_origin(mlx);
 	matrix = return_matrix('x', -90 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
-	move_center(mlx, centers[0], centers[1], centers[2]);
+	move_center(mlx, centers[0], centers[1]);
 	free_matrix(matrix);
 	draw_image(mlx);
 }
@@ -129,7 +124,6 @@ void	op_pers(t_mlx *mlx)
 	mlx->points = return_array(mlx, height, width, mlx->camera->zoom);
 	centers[0] = mlx->points[height / 2][width / 2][0];
 	centers[1] = mlx->points[height / 2][width / 2][2];
-	centers[2] = mlx->points[height / 2][width / 2][1];
 	move_to_origin(mlx);
 	matrix = return_matrix('x', -75 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
@@ -137,6 +131,6 @@ void	op_pers(t_mlx *mlx)
 	matrix = return_matrix('z', 30 * (3.1415 / 180));
 	apply_transformation(mlx->points, matrix, height, width);
 	free_matrix(matrix);
-	move_center(mlx, centers[0], centers[1], centers[2]);
+	move_center(mlx, centers[0], centers[1]);
 	draw_image(mlx);
 }

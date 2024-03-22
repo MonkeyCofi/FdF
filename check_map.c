@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:18:58 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 15:28:15 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:55:23 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ void	valid_map(char *map)
 {
 	int	file;
 
+	if (ft_strncmp(&map[(ft_strlen(map) - 4)], ".fdf", 4))
+	{
+		ft_putendl_fd("Map should be in .fdf format", 2);
+		exit(EXIT_FAILURE);
+	}
 	file = open(map, O_RDONLY);
 	if (file == -1)
 	{
 		ft_putendl_fd("Couldn't open file", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (ft_strncmp(&map[(ft_strlen(map) - 4)], ".fdf", 4))
-	{
-		ft_putendl_fd("Map should be in .fdf format", 2);
-		exit(EXIT_FAILURE);
-	}
+	close(file);
 }
 
 char	*standardize_color(char *color)

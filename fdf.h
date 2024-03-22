@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:57:49 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 17:23:17 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:28:32 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ void	zoom(t_mlx *mlx, float scale, int code);
 int		get_color(t_mlx *mlx, int i, int j);
 float	get_current_percent(float start, float end, float current);
 int		gradient_color(t_point start, t_point end, float progress);
-
 
 /*		map check	*/
 void	valid_map(char *map);

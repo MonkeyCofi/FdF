@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:55:55 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 15:30:55 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:28:20 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_width(char *filename)
 	n_columns = 0;
 	line = get_next_line(file);
 	column = ft_split(line, " \n");
-	while (column[n_columns])	
+	while (column[n_columns])
 		n_columns++;
 	free_d_strline(line, column, NULL, 0);
 	check_map_width(file, n_columns);

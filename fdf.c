@@ -6,7 +6,7 @@
 /*   By: pipolint <pipolint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:45:31 by pipolint          #+#    #+#             */
-/*   Updated: 2024/03/20 21:51:33 by pipolint         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:41:09 by pipolint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main(int ac, char **av)
 		mlx_hook(mlx.mlx_window, 2, 1L << 0, get_key_pressed, &mlx);
 	init_camera(&mlx);
 	get_default_position(&mlx, mlx.points);
+	mlx_hook(mlx.mlx_window, 17, 0, escape, &mlx);
 	mlx_loop_hook(mlx.mlx, color_spin, &mlx);
 	draw(&mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_window, mlx.img.img, 0, 0);
